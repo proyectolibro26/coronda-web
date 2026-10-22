@@ -235,6 +235,10 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
 .site-footer { border-top: 1px solid var(--line); padding-block: 28px max(28px, env(safe-area-inset-bottom, 0px)); color: var(--muted); font-size: 13px; }
 .site-footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
+.footer-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.footer-links a { color: #d8d8d8; border-bottom: 1px solid transparent; transition: border-color .2s ease, color .2s ease; }
+.footer-links a:hover { color: #fff; border-bottom-color: var(--sodium); }
+
 /* ---------- Animación de entrada ---------- */
 .appear { opacity: 1; animation-duration: 1.05s; animation-fill-mode: both; animation-timing-function: cubic-bezier(.16,1,.3,1); animation-delay: var(--d, .08s); }
 .appear--scale { animation-name: in-scale; } .appear--soft { animation-name: in-soft; } .appear--mask { animation-name: in-mask; }
@@ -472,7 +476,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
         </dl>
         <div class="buy-actions">
           <a class="btn btn-solid btn-lg" href="#comprar">Comprar en papel</a>
-          <a class="btn btn-ghost btn-lg" href="#comprar">Consultar por WhatsApp</a>
+          <a class="btn btn-ghost btn-lg" href="https://wa.me/5493412609941?text=Hola%21%20Quiero%20el%20libro%20Ranchada%20en%20papel.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener">Consultar por WhatsApp</a>
         </div>
         <p class="pay-note">Tarjeta, débito, transferencia o dinero en Mercado Pago. Solo envíos dentro de Argentina.</p>
       </div>
@@ -491,7 +495,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
         </dl>
         <div class="buy-actions">
           <a class="btn btn-solid btn-lg" href="#comprar">Comprar digital</a>
-          <a class="btn btn-ghost btn-lg" href="#comprar">Consultar por WhatsApp</a>
+          <a class="btn btn-ghost btn-lg" href="https://wa.me/5493412609941?text=Hola%21%20Quiero%20el%20libro%20Ranchada%20en%20digital.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener">Consultar por WhatsApp</a>
         </div>
         <p class="pay-note">Se lee en el celular, la tablet o la computadora.</p>
       </div>
@@ -527,7 +531,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
 <footer class="site-footer">
   <div class="wrap">
     <span>Ranchada · Mantenelo vivo</span>
-    <span>WhatsApp <span class="fill">[número]</span> · Instagram <span class="fill">[@usuario]</span></span>
+    <span class="footer-links"><a href="https://wa.me/5493412609941?text=Hola%21%20Te%20escribo%20por%20el%20libro%20Ranchada." target="_blank" rel="noopener">WhatsApp 341 260-9941</a><a href="https://www.instagram.com/ranchadalibro/" target="_blank" rel="noopener">Instagram @ranchadalibro</a><a href="https://www.tiktok.com/@ranchadalibro" target="_blank" rel="noopener">TikTok @ranchadalibro</a></span>
   </div>
 </footer>
 

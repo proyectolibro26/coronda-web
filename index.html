@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Coronda · Novela</title>
+<meta name="description" content="Fui policía. Estuve preso. Volví a entrar por un amigo. Una novela de cárcel escrita por alguien que estuvo adentro.">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Coronda · Novela">
+<meta property="og:description" content="Fui policía. Estuve preso. Volví a entrar por un amigo.">
+<meta property="og:image" content="/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Crect x='3' y='2.5' width='18' height='19' rx='3' fill='none' stroke='white' stroke-width='1.8'/%3E%3Crect x='7' y='5' width='1.8' height='14' rx='.9'/%3E%3Crect x='11.1' y='5' width='1.8' height='14' rx='.9'/%3E%3Crect x='15.2' y='5' width='1.8' height='14' rx='.9'/%3E%3C/svg%3E">
+<style>
+html, body { background: #000000 !important; color: #ffffff; }
+/* Layout: hero a pantalla completa (luz de celda entre rejas) y debajo una página de venta que se lee de corrido: historia, fragmento, qué trae, autor, compra, preguntas. */
+:root {
+  color-scheme: dark;
+  --bg: #000000;
+  --surface: #0d0c0b;
+  --line: rgba(255,255,255,.12);
+  --text: #ffffff;
+  --muted: #9a9a9a;
+  --stat: #d8d8d8;
+  --sodium: #d6a05a;
+  --sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --serif: "Instrument Serif", "Times New Roman", Times, serif;
+
+  --logo: 15.5px; --nav: 14px; --nav-h: 40px; --btn: 13.5px; --btn-h: 40px; --hero-btn-h: 44px;
+  --h1: 52px; --lede: 16px; --badge: 12.5px; --stat-size: 13.5px;
+  --gutter: 40px; --hero-gap: 72px;
+  --h2: 40px; --body: 17px;
+}
+html, body { background: var(--bg); color: var(--text); }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* Marcador de dato a completar */
+.fill { color: var(--sodium); border-bottom: 1px dashed var(--sodium); }
+
+.grain {
+  position: fixed; inset: 0; z-index: 100; pointer-events: none; opacity: .13; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap { width: 100%; max-width: 1080px; margin: 0 auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px)); padding-right: max(var(--gutter), env(safe-area-inset-right, 0px)); }
+
+/* ---------- Hero ---------- */
+.top { position: relative; display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh; min-height: 100svh; isolation: isolate; }
+.hero-photo {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+  background: #000;
+  animation: in-light 2.4s cubic-bezier(.16,1,.3,1) both;
+}
+/* Dibujo del autor: celda vista desde la cucheta */
+.hero-photo::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("celda.webp") center top / cover no-repeat;
+  opacity: .62;
+}
+.hero-photo::after { content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(55% 45% at 60% 20%, rgba(214,160,90,.16), transparent 70%),
+    linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.05) 22%, rgba(0,0,0,.55) 52%, rgba(0,0,0,.92) 72%, #000 100%); }
+
+.header {
+  position: relative; z-index: 50; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  padding-top: 22px; padding-bottom: 10px;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px)); padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+.logo { display: inline-flex; align-items: center; gap: 9px; justify-self: start; font-size: var(--logo); font-weight: 600; letter-spacing: -.03em; }
+.logo svg { width: 22px; height: 22px; }
+.logo-suffix { font-weight: 400; color: var(--muted); }
+
+#site-nav { display: flex; align-items: center; gap: 8px; justify-self: center; }
+#site-nav a {
+  position: relative; overflow: hidden; display: inline-flex; align-items: center; height: var(--nav-h); padding: 0 18px; border-radius: 7px;
+  border: 1px solid rgba(198,198,198,.55); background: linear-gradient(105deg, #050505 0%, #2a2a2a 48%, #4a4a4a 100%);
+  color: #f3f3f3; font-size: var(--nav); letter-spacing: -.01em; white-space: nowrap;
+  transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+#site-nav a::before { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.16) 50%, transparent 70%); transform: translateX(-120%); transition: transform .6s ease; }
+#site-nav a:hover { border-color: rgba(235,235,235,.9); background: linear-gradient(105deg, #111 0%, #3a3a3a 45%, #6a6a6a 100%); box-shadow: 0 0 18px rgba(200,210,230,.18); }
+#site-nav a:hover::before { transform: translateX(120%); }
+.header-right { justify-self: end; display: flex; align-items: center; gap: 8px; }
+.burger { display: none; place-content: center; gap: 5px; width: 42px; height: 42px; border-radius: 6px; border: 1px solid rgba(255,255,255,.16); background: rgba(8,8,8,.55); cursor: pointer; position: relative; z-index: 60; }
+.burger span { display: block; width: 16px; height: 1.5px; border-radius: 1px; background: #fff; transition: transform .25s ease, opacity .2s ease; }
+body.menu-open .burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+body.menu-open .burger span:nth-child(2) { opacity: 0; }
+body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.menu-backdrop { display: none; }
+
+.btn {
+  position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: var(--btn-h); padding: 0 16px; border-radius: 6px; font-size: var(--btn); font-weight: 500; letter-spacing: -.02em; line-height: 1; white-space: nowrap; cursor: pointer;
+  transition: background .35s, border-color .35s, box-shadow .35s, color .35s;
+}
+.btn::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,.45) 48%, transparent 76%); transform: translateX(-130%); transition: transform .65s ease; }
+.btn:hover::after { transform: translateX(130%); }
+.btn-solid { background: linear-gradient(180deg, #ffffff 0%, #e7e7e7 48%, #cfcfcf 100%); color: #111; border: 1px solid #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.95); }
+.btn-solid:hover { background: linear-gradient(180deg, #fff 0%, #fbf3e8 42%, #e6d3b8 100%); box-shadow: inset 0 1px 0 #fff, 0 0 24px rgba(214,160,90,.38), 0 8px 18px rgba(255,255,255,.12); }
+.btn-ghost {
+  background: linear-gradient(135deg, rgba(255,255,255,.12), rgba(0,0,0,.5) 46%, rgba(150,170,200,.1)); color: #fff;
+  border: 1px solid rgba(198,198,198,.55); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+}
+.btn-ghost:hover { border-color: rgba(240,225,205,.8); box-shadow: 0 0 24px rgba(214,160,90,.28); }
+.btn-lg { height: var(--hero-btn-h); padding: 0 20px; font-size: 14.5px; }
+
+.hero { display: flex; align-items: flex-end; justify-content: center; min-height: 0; padding-top: 8px; padding-bottom: var(--hero-gap);
+  padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
+.hero-copy { display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 900px; width: 100%; }
+.badge { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 22px; padding: 9px 15px; border-radius: 5px;
+  background: linear-gradient(90deg, #7d7d7d 0%, #2a2a2a 52%, #0a0a0a 100%); color: #f2f2f2; font-size: var(--badge); letter-spacing: -.01em; }
+.badge-star { width: 18px; height: 20px; fill: #fff; filter: drop-shadow(0 0 3px rgba(255,255,255,.45)); animation: in-star .9s cubic-bezier(.16,1,.3,1) .28s both; }
+.hero h1 { display: flex; flex-direction: column; align-items: center; font-size: var(--h1); font-weight: 500; letter-spacing: -.045em; line-height: 1.12; text-wrap: balance; }
+.headline-line { display: block; overflow: hidden; padding: .06em .15em .14em; }
+.hero h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.08em; letter-spacing: -.03em; color: var(--muted); animation: in-em 1.2s cubic-bezier(.16,1,.3,1) .72s both; }
+.lede { max-width: 520px; margin-top: 18px; color: var(--muted); font-size: var(--lede); line-height: 1.55; letter-spacing: -.015em; text-wrap: pretty; }
+.hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 26px; }
+
+.stats { display: flex; align-items: center; justify-content: space-between; gap: 24px; color: var(--stat);
+  padding-bottom: max(36px, env(safe-area-inset-bottom, 0px));
+  padding-left: max(72px, env(safe-area-inset-left, 0px)); padding-right: max(72px, env(safe-area-inset-right, 0px)); }
+.stat { display: inline-flex; align-items: center; gap: 14px; font-size: var(--stat-size); letter-spacing: -.015em; white-space: nowrap; }
+.stat svg { width: 20px; height: 20px; flex: none; color: #e8e8e8; }
+.stat b { font-weight: 600; color: #fff; }
+
+/* ---------- Secciones de venta ---------- */
+.section { padding-block: 104px; border-top: 1px solid var(--line); }
+.eyebrow { display: block; margin-bottom: 18px; color: var(--sodium); font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.h2 { font-size: var(--h2); font-weight: 500; letter-spacing: -.04em; line-height: 1.1; text-wrap: balance; max-width: 760px; }
+.h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--muted); letter-spacing: -.02em; }
+.prose { max-width: 640px; margin-top: 28px; display: grid; gap: 18px; color: #cfcfcf; font-size: var(--body); line-height: 1.7; }
+.prose strong { color: #fff; font-weight: 600; }
+
+/* Fragmento */
+.excerpt { margin-top: 40px; max-width: 720px; padding: 40px 0 0; border-top: 1px solid var(--line); }
+.excerpt-meta { display: flex; gap: 14px; flex-wrap: wrap; color: var(--muted); font-size: 13px; margin-bottom: 22px; font-variant-numeric: tabular-nums; }
+.excerpt-meta span + span::before { content: "·"; margin-right: 14px; }
+.excerpt blockquote { font-family: var(--serif); font-size: clamp(24px, 3.2vw, 32px); line-height: 1.35; color: #ececec; }
+.excerpt .note { margin-top: 20px; font-size: 14px; color: var(--muted); }
+
+/* Qué trae */
+.features { margin-top: 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.feature { background: var(--bg); padding: 30px 26px 32px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.feature svg { width: 26px; height: 26px; color: var(--sodium); }
+.feature h3 { font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+.feature p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+/* Autor */
+.author { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; align-items: start; }
+.portrait { aspect-ratio: 4 / 5; max-width: 100%; border: 1px dashed rgba(214,160,90,.6); display: grid; place-items: center; text-align: center; padding: 16px; color: var(--sodium); font-size: 13px; line-height: 1.5;
+  background: repeating-linear-gradient(90deg, #070707 0 22px, #0e0e0e 22px 26px); }
+.timeline { margin-top: 32px; display: grid; gap: 0; max-width: 560px; border-top: 1px solid var(--line); }
+.timeline li { list-style: none; display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.timeline .t { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Compra */
+.buy { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 64px; align-items: center; }
+.cover { position: relative; aspect-ratio: 2 / 3; max-width: 100%; border-radius: 3px 8px 8px 3px; overflow: hidden;
+  background: radial-gradient(70% 50% at 70% 22%, rgba(214,160,90,.45), transparent 70%), #050505;
+  box-shadow: -14px 0 0 -10px #1a1a1a, 0 30px 60px rgba(0,0,0,.7), inset 3px 0 0 rgba(255,255,255,.08);
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 28px 24px; }
+.cover::before { content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 34px, rgba(0,0,0,.85) 34px 44px);
+  -webkit-mask-image: linear-gradient(180deg, #000 10%, transparent 70%); mask-image: linear-gradient(180deg, #000 10%, transparent 70%); }
+.cover > * { position: relative; }
+.cover-title { font-family: var(--serif); font-size: 44px; line-height: 1; letter-spacing: -.02em; }
+.cover-sub { margin-top: 10px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.cover-tag { position: absolute; top: 16px; left: 16px; font-size: 11px; color: var(--sodium); border: 1px dashed rgba(214,160,90,.6); padding: 4px 8px; }
+
+.price-row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
+.price { font-size: 46px; font-weight: 600; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.price-note { color: var(--muted); font-size: 14px; }
+.specs { margin-top: 26px; display: grid; gap: 0; border-top: 1px solid var(--line); max-width: 520px; }
+.specs div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.specs dt { color: var(--muted); }
+.specs dd { text-align: right; }
+.buy-actions { margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap; }
+.pay-note { margin-top: 14px; color: var(--muted); font-size: 13px; }
+
+/* Preguntas */
+.faq { margin-top: 40px; max-width: 760px; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; padding: 20px 0; font-size: 17px; font-weight: 500; letter-spacing: -.01em; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--muted); font-weight: 300; font-size: 22px; line-height: 1; transition: transform .25s ease; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding: 0 0 22px; color: #bdbdbd; font-size: 15.5px; line-height: 1.65; max-width: 640px; }
+
+/* Cierre */
+.closing { position: relative; isolation: isolate; overflow: hidden; text-align: center; padding-block: 160px 128px; border-top: 1px solid var(--line); }
+/* Dibujo del autor: reja y portón del penal */
+.closing::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("reja.webp") center / cover no-repeat; opacity: .42; }
+.closing::after { content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, #000 0%, rgba(0,0,0,.35) 30%, rgba(0,0,0,.35) 70%, #000 100%), radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,.6), transparent 80%); }
+.closing .h2 { margin: 0 auto; }
+.closing .hero-actions { margin-top: 30px; }
+.site-footer { border-top: 1px solid var(--line); padding-block: 28px max(28px, env(safe-area-inset-bottom, 0px)); color: var(--muted); font-size: 13px; }
+.site-footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* ---------- Animación de entrada ---------- */
+.appear { opacity: 1; animation-duration: 1.05s; animation-fill-mode: both; animation-timing-function: cubic-bezier(.16,1,.3,1); animation-delay: var(--d, .08s); }
+.appear--scale { animation-name: in-scale; } .appear--soft { animation-name: in-soft; } .appear--mask { animation-name: in-mask; }
+.appear--pop { animation-name: in-pop; } .appear--btn { animation-name: in-btn; } .appear--side { animation-name: in-side; } .appear--stat { animation-name: in-stat; }
+.appear.is-in, .hero-photo.is-in { animation: none; opacity: 1; transform: none; clip-path: none; filter: none; }
+@keyframes in-scale { from { opacity: 0; transform: scale(.84); } to { opacity: 1; transform: none; } }
+@keyframes in-soft  { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes in-mask  { from { opacity: 0; transform: translateY(40%); } to { opacity: 1; transform: none; } }
+@keyframes in-pop   { 0% { opacity: 0; transform: scale(.9); } 70% { opacity: 1; transform: scale(1.03); } 100% { opacity: 1; transform: none; } }
+@keyframes in-btn   { from { opacity: 0; transform: translateY(18px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes in-side  { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: none; } }
+@keyframes in-stat  { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+@keyframes in-star  { 0% { opacity: 0; transform: scale(.2) rotate(-50deg); } 65% { opacity: 1; transform: scale(1.2) rotate(8deg); } 100% { opacity: 1; transform: none; } }
+@keyframes in-em    { from { opacity: .35; filter: blur(4px); } to { opacity: 1; filter: none; } }
+@keyframes in-light { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .appear, .hero-photo, .hero h1 em, .badge-star { opacity: 1; transform: none; filter: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- Responsive ---------- */
+@media (min-width: 1600px) { :root { --h1: 64px; --lede: 18px; --nav: 15px; --nav-h: 44px; --btn: 15px; --btn-h: 44px; --hero-btn-h: 50px; --gutter: 64px; } }
+@media (max-width: 1279px) { :root { --h1: 44px; --nav: 13px; --nav-h: 36px; --gutter: 28px; } #site-nav a { padding: 0 14px; } .stats { padding-left: max(36px, env(safe-area-inset-left,0px)); padding-right: max(36px, env(safe-area-inset-right,0px)); } }
+
+@media (max-width: 900px) {
+  :root { --h1: 36px; --lede: 16.5px; --btn: 15px; --btn-h: 44px; --hero-btn-h: 50px; --gutter: 20px; --hero-gap: 36px; --h2: 32px; --body: 16.5px; }
+  .header { grid-template-columns: 1fr auto; gap: 8px; padding-top: 16px; }
+  .logo, .header-right { position: relative; z-index: 80; }
+  .burger { display: grid; }
+  .menu-backdrop { display: block; position: fixed; inset: 0; z-index: 40; background: rgba(8,8,8,.42); opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility .28s ease; }
+  body.menu-open .menu-backdrop { opacity: 1; visibility: visible; -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
+  #site-nav { position: fixed; inset: 0; z-index: 45; flex-direction: column; justify-content: center; gap: 12px;
+    padding-top: max(96px, calc(env(safe-area-inset-top, 0px) + 88px)); padding-bottom: 32px;
+    padding-left: max(22px, env(safe-area-inset-left, 0px)); padding-right: max(22px, env(safe-area-inset-right, 0px));
+    opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility .28s ease; }
+  body.menu-open #site-nav { opacity: 1; visibility: visible; }
+  #site-nav a { width: 100%; max-width: 420px; height: 56px; font-size: 19px; border-radius: 10px; justify-content: center; }
+  body.menu-open { overflow: hidden; }
+  .hero { padding-bottom: 48px; }
+  .hero-photo::before { background-position: 22% top; background-size: auto 78%; opacity: .7; }
+  .stats { flex-direction: column; gap: 14px; padding-left: max(20px, env(safe-area-inset-left,0px)); padding-right: max(20px, env(safe-area-inset-right,0px)); }
+  .stat { white-space: normal; }
+  .section { padding-block: 72px; }
+  .features { grid-template-columns: minmax(0, 1fr); }
+  .author { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .portrait { max-width: 220px; }
+  .buy { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .cover { max-width: 280px; margin: 0 auto; width: 100%; }
+  .timeline li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+@media (max-width: 560px) {
+  :root { --h1: 33px; --gutter: 16px; }
+  .header-cta { display: none; }
+  .hero-actions, .buy-actions { flex-direction: column; width: 100%; }
+  .hero-actions .btn, .buy-actions .btn { width: 100%; }
+  .price { font-size: 40px; }
+}
+</style>
+</head>
+<body style="background:#000;color:#fff">
+
+
+<div class="grain" aria-hidden="true"></div>
+
+<div class="top" id="top">
+  <div class="hero-photo" aria-hidden="true"></div>
+  <div class="menu-backdrop" aria-hidden="true"></div>
+
+  <header class="header">
+    <a class="logo appear appear--scale" style="--d:.08s" href="#top" aria-label="Coronda, novela">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="2.5" width="18" height="19" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="7" y="5" width="1.8" height="14" rx=".9"/><rect x="11.1" y="5" width="1.8" height="14" rx=".9"/><rect x="15.2" y="5" width="1.8" height="14" rx=".9"/></svg>
+      <span>Coronda<span class="logo-suffix"> · novela</span></span>
+    </a>
+    <nav id="site-nav" aria-label="Principal">
+      <a class="appear appear--scale" style="--d:.16s" href="#historia">La historia</a>
+      <a class="appear appear--soft"  style="--d:.28s" href="#que-trae">Qué trae</a>
+      <a class="appear appear--scale" style="--d:.40s" href="#autor">El autor</a>
+      <a class="appear appear--soft"  style="--d:.52s" href="#comprar">Comprar</a>
+    </nav>
+    <div class="header-right">
+      <a class="btn btn-solid header-cta appear appear--scale" style="--d:.34s" href="#comprar">Comprar el libro</a>
+      <button class="burger appear appear--scale" style="--d:.34s" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="hero-copy">
+      <span class="badge appear appear--pop" style="--d:.22s">
+        <svg class="badge-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6C12.55 2.6 12.88 3.15 13.08 4.7c.62 4.7 1.52 5.6 6.22 6.22 1.55.2 2.1.53 2.1 1.08s-.55.88-2.1 1.08c-4.7.62-5.6 1.52-6.22 6.22-.2 1.55-.53 2.1-1.08 2.1s-.88-.55-1.08-2.1c-.62-4.7-1.52-5.6-6.22-6.22C3.15 12.88 2.6 12.55 2.6 12s.55-.88 2.1-1.08c4.7-.62 5.6-1.52 6.22-6.22C11.12 3.15 11.45 2.6 12 2.6Z"/></svg>
+        Novela · Edición en papel
+      </span>
+      <h1>
+        <span class="headline-line"><span class="appear appear--mask" style="--d:.42s;display:inline-block">Fui policía. Estuve preso.</span></span>
+        <span class="headline-line"><span class="appear appear--mask" style="--d:.62s;display:inline-block"><em>Volví a entrar</em> por un amigo.</span></span>
+      </h1>
+      <p class="lede appear appear--soft" style="--d:.82s;animation-duration:1.25s">Una novela de cárcel escrita por alguien que estuvo adentro. La trama es ficción. Trelew, Coronda y Piñero son reales, y el autor pasó por los tres.</p>
+      <div class="hero-actions">
+        <a class="btn btn-solid btn-lg appear appear--btn" style="--d:.96s" href="#comprar">Comprar el libro</a>
+        <a class="btn btn-ghost btn-lg appear appear--side" style="--d:1.10s" href="#comienzo">Leer cómo empieza</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="stats">
+    <span class="stat appear appear--stat" style="--d:1.12s">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="2.5" width="18" height="19" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="7.2" y="5.5" width="1.7" height="13" rx=".85"/><rect x="11.15" y="5.5" width="1.7" height="13" rx=".85"/><rect x="15.1" y="5.5" width="1.7" height="13" rx=".85"/></svg>
+      <span><b>4 años y 8 meses</b> en la Alcaidía de Trelew</span>
+    </span>
+    <span class="stat appear appear--stat" style="--d:1.28s">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.4" y="2.4" width="19.2" height="19.2" rx="6.2" fill="#fff"/><path d="M12 6.6c-2.3 0-4 1.75-4 3.9 0 2.9 4 7 4 7s4-4.1 4-7c0-2.15-1.7-3.9-4-3.9Z" fill="none" stroke="#111" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10.5" r="1.35" fill="#111"/></svg>
+      <span><b>16 meses</b> entre Coronda y Piñero</span>
+    </span>
+    <span class="stat appear appear--stat" style="--d:1.44s">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><path d="M14 14h3v3M17.5 21H21v-3.5"/></svg>
+      <span>Dibujos en lapicera y <b>QR con mapas y música</b></span>
+    </span>
+  </footer>
+</div>
+
+<!-- LA HISTORIA -->
+<section class="section" id="historia">
+  <div class="wrap">
+    <span class="eyebrow">La historia</span>
+    <h2 class="h2">Un WhatsApp, una perpetua y <em>una sola salida.</em></h2>
+    <div class="prose">
+      <p>Todo arranca con un mensaje. A <strong>Fernando</strong>, el amigo que el narrador conoció en la Alcaidía de Trelew, le acaban de confirmar la perpetua por un homicidio que no cometió.</p>
+      <p>El narrador ya está en España, lejos de todo. Pero sabe dos cosas: que el verdadero asesino está preso en Coronda, y que solo una confesión puede sacar a Fernando.</p>
+      <p>Así que vuelve. Y para llegar hasta ese hombre hace lo único que funciona: <strong>se hace detener a propósito.</strong> Como ex-policía, termina en el pabellón policial. Adentro estalla un motín, y su misión cambia: mantener vivo al tipo que todos quieren muerto.</p>
+    </div>
+
+    <div class="excerpt" id="comienzo">
+      <div class="excerpt-meta"><span>Capítulo 1</span><span>Primeras líneas</span></div>
+      <blockquote><span class="fill">[Pegá acá las primeras 4 a 6 líneas del capítulo 1, tal cual están en el libro.]</span></blockquote>
+      <p class="note">Las primeras líneas venden más que cualquier resumen. Elegí las que más pegan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ TRAE -->
+<section class="section" id="que-trae">
+  <div class="wrap">
+    <span class="eyebrow">Qué trae el libro</span>
+    <h2 class="h2">No se lee solamente. <em>Se ubica y se escucha.</em></h2>
+    <div class="features">
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4Z"/><path d="M14 7l3 3"/></svg>
+        <h3>Dibujos en lapicera</h3>
+        <p>Ilustraciones hechas a mano por el autor: pasillos, celdas y caras que vio de cerca.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11Z"/><circle cx="12" cy="10" r="2.2"/></svg>
+        <h3>QR con mapas</h3>
+        <p>Escaneás y Google Maps te muestra dónde pasó cada escena. Los lugares existen.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>
+        <h3>QR con música</h3>
+        <p>La música que sonaba en ese momento. Le das play y leés con la misma banda de fondo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTOR -->
+<section class="section" id="autor">
+  <div class="wrap author">
+    <div class="portrait"><span>[Tu foto o un autorretrato en lapicera]</span></div>
+    <div>
+      <span class="eyebrow">El autor</span>
+      <h2 class="h2">Estuve en los dos lados <em>de la reja.</em></h2>
+      <div class="prose">
+        <p>Tengo 35 años. Fui policía de Infantería y terminé preso. Adentro conocí a gente que no sale en las noticias y aprendí códigos que no se enseñan en ningún lado.</p>
+        <p>Este libro es una novela, pero cada olor, cada pasillo y cada silencio los viví.</p>
+      </div>
+      <ul class="timeline">
+        <li><span class="t">Policía</span><span>Sección Infantería</span></li>
+        <li><span class="t">4 años y 8 meses</span><span>Alcaidía de Trelew, Chubut</span></li>
+        <li><span class="t">3 años</span><span>España</span></li>
+        <li><span class="t">8 meses</span><span>Coronda, Santa Fe</span></li>
+        <li><span class="t">8 meses</span><span>Piñero, Santa Fe</span></li>
+        <li><span class="t">Hoy</span><span>Libre, y escribiendo</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPRAR -->
+<section class="section" id="comprar">
+  <div class="wrap buy">
+    <div class="cover" aria-label="Tapa provisoria del libro">
+      <span class="cover-tag">Tapa provisoria</span>
+      <div class="cover-title">Coronda</div>
+      <div class="cover-sub">Novela</div>
+    </div>
+    <div>
+      <span class="eyebrow">Edición en papel</span>
+      <h2 class="h2">Tenelo en tus manos.</h2>
+      <div class="price-row">
+        <span class="price"><span class="fill">$ —</span></span>
+        <span class="price-note">+ envío a todo el país</span>
+      </div>
+      <dl class="specs">
+        <div><dt>Formato</dt><dd>Libro en papel</dd></div>
+        <div><dt>Páginas</dt><dd><span class="fill">[completar]</span></dd></div>
+        <div><dt>Incluye</dt><dd>Ilustraciones y códigos QR</dd></div>
+        <div><dt>Envío</dt><dd><span class="fill">[Correo / Andreani / retiro]</span></dd></div>
+        <div><dt>Llega en</dt><dd><span class="fill">[X a X días hábiles]</span></dd></div>
+      </dl>
+      <div class="buy-actions">
+        <a class="btn btn-solid btn-lg" href="#comprar">Comprar con Mercado Pago</a>
+        <a class="btn btn-ghost btn-lg" href="#comprar">Consultar por WhatsApp</a>
+      </div>
+      <p class="pay-note">Tarjeta, débito, transferencia o dinero en Mercado Pago.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PREGUNTAS -->
+<section class="section" id="preguntas">
+  <div class="wrap">
+    <span class="eyebrow">Preguntas</span>
+    <h2 class="h2">Lo que más me preguntan.</h2>
+    <div class="faq">
+      <details><summary>¿Es una historia real?</summary><p>Es una novela. La trama es ficción, pero los lugares, las situaciones y la forma de vivir adentro son reales: el autor estuvo ahí.</p></details>
+      <details><summary>¿Cómo pago?</summary><p>Con Mercado Pago: tarjeta de crédito, débito, transferencia o dinero en cuenta. Si preferís otra forma, escribime por WhatsApp.</p></details>
+      <details><summary>¿Cuánto tarda en llegar?</summary><p><span class="fill">[Completar: días hábiles y empresa de envío.]</span></p></details>
+      <details><summary>¿Envían a España?</summary><p><span class="fill">[Completar: por ahora solo Argentina, o versión digital para el exterior.]</span></p></details>
+      <details><summary>¿Cómo funcionan los QR?</summary><p>Los escaneás con la cámara del celular. Algunos abren Google Maps en el lugar de la escena y otros abren la canción que sonaba en ese momento.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <h2 class="h2">Yo estuve adentro. <em>Ahora entrás vos.</em></h2>
+    <div class="hero-actions">
+      <a class="btn btn-solid btn-lg" href="#comprar">Comprar el libro</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>Coronda · novela</span>
+    <span>WhatsApp <span class="fill">[número]</span> · Instagram <span class="fill">[@usuario]</span></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var body = document.body;
+  var appear = Array.prototype.slice.call(document.querySelectorAll('.appear'));
+  var photo = document.querySelector('.hero-photo');
+  appear.forEach(function (el) { el.addEventListener('animationend', function (e) { if (e.target === el) el.classList.add('is-in'); }, { once: true }); });
+  if (photo) photo.addEventListener('animationend', function () { photo.classList.add('is-in'); }, { once: true });
+  function forceIn() { appear.forEach(function (el) { el.classList.add('is-in'); }); if (photo) photo.classList.add('is-in'); }
+  requestAnimationFrame(function () { requestAnimationFrame(function () {
+    var first = appear[0];
+    if (!first || typeof first.getAnimations !== 'function') { forceIn(); return; }
+    if (!first.getAnimations().some(function (a) { return a.playState === 'running' || a.playState === 'finished'; })) forceIn();
+  }); });
+
+  var burger = document.querySelector('.burger'), nav = document.getElementById('site-nav');
+  function setMenu(open) {
+    body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  }
+  burger.addEventListener('click', function () { setMenu(!body.classList.contains('menu-open')); });
+  nav.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+  document.querySelector('.menu-backdrop').addEventListener('click', function () { setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+  var mq = window.matchMedia('(min-width: 901px)'), onMq = function (m) { if (m.matches) setMenu(false); };
+  if (mq.addEventListener) mq.addEventListener('change', onMq); else mq.addListener(onMq);
+})();
+</script>
+
+</body>
+</html>

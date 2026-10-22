@@ -187,6 +187,28 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
 .buy-actions { margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap; }
 .pay-note { margin-top: 14px; color: var(--muted); font-size: 13px; }
 
+/* Selector papel / digital */
+.format-picker { margin-top: 28px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; max-width: 520px; }
+.format-opt { position: relative; cursor: pointer; }
+.format-opt input { position: absolute; opacity: 0; pointer-events: none; }
+.format-card {
+  display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 12px; row-gap: 2px; align-items: center;
+  padding: 16px 16px; border-radius: 8px; border: 1px solid rgba(198,198,198,.3);
+  background: linear-gradient(105deg, #050505 0%, #161616 60%, #222 100%);
+  transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.format-card svg { grid-row: span 2; width: 24px; height: 24px; color: var(--muted); transition: color .25s ease; }
+.format-name { font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.format-price { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.format-opt:hover .format-card { border-color: rgba(235,235,235,.6); }
+.format-opt input:checked + .format-card {
+  border-color: var(--sodium); box-shadow: 0 0 0 1px var(--sodium), 0 0 24px rgba(214,160,90,.18);
+  background: linear-gradient(105deg, #0b0806 0%, #1d160e 60%, #2a1f12 100%);
+}
+.format-opt input:checked + .format-card svg { color: var(--sodium); }
+.format-opt input:focus-visible + .format-card { outline: 2px solid #fff; outline-offset: 3px; }
+.format-panel .price-row { margin-top: 22px; }
+
 /* Preguntas */
 .faq { margin-top: 40px; max-width: 760px; border-top: 1px solid var(--line); }
 .faq details { border-bottom: 1px solid var(--line); }
@@ -297,7 +319,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
     <div class="hero-copy">
       <span class="badge appear appear--pop" style="--d:.22s">
         <svg class="badge-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6C12.55 2.6 12.88 3.15 13.08 4.7c.62 4.7 1.52 5.6 6.22 6.22 1.55.2 2.1.53 2.1 1.08s-.55.88-2.1 1.08c-4.7.62-5.6 1.52-6.22 6.22-.2 1.55-.53 2.1-1.08 2.1s-.88-.55-1.08-2.1c-.62-4.7-1.52-5.6-6.22-6.22C3.15 12.88 2.6 12.55 2.6 12s.55-.88 2.1-1.08c4.7-.62 5.6-1.52 6.22-6.22C11.12 3.15 11.45 2.6 12 2.6Z"/></svg>
-        Novela · Edición en papel
+        Novela · En papel y digital
       </span>
       <h1>
         <span class="headline-line"><span class="appear appear--mask" style="--d:.42s;display:inline-block">Fui policía. Estuve preso.</span></span>
@@ -403,24 +425,65 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
       <div class="cover-sub">Novela</div>
     </div>
     <div>
-      <span class="eyebrow">Edición en papel</span>
-      <h2 class="h2">Tenelo en tus manos.</h2>
-      <div class="price-row">
-        <span class="price"><span class="fill">$ —</span></span>
-        <span class="price-note">+ envío a todo el país</span>
+      <span class="eyebrow">Elegí tu edición</span>
+      <h2 class="h2">En papel o <em>en tu celular.</em></h2>
+
+      <div class="format-picker" role="radiogroup" aria-label="Formato del libro">
+        <label class="format-opt">
+          <input type="radio" name="formato" id="formato-papel" value="papel" checked>
+          <span class="format-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>
+            <span class="format-name">Papel</span>
+            <span class="format-price"><span class="fill">$ —</span></span>
+          </span>
+        </label>
+        <label class="format-opt">
+          <input type="radio" name="formato" id="formato-digital" value="digital">
+          <span class="format-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10.5 18.5h3"/></svg>
+            <span class="format-name">Digital</span>
+            <span class="format-price"><span class="fill">$ —</span></span>
+          </span>
+        </label>
       </div>
-      <dl class="specs">
-        <div><dt>Formato</dt><dd>Libro en papel</dd></div>
-        <div><dt>Páginas</dt><dd><span class="fill">[completar]</span></dd></div>
-        <div><dt>Incluye</dt><dd>Ilustraciones y códigos QR</dd></div>
-        <div><dt>Envío</dt><dd><span class="fill">[Correo / Andreani / retiro]</span></dd></div>
-        <div><dt>Llega en</dt><dd><span class="fill">[X a X días hábiles]</span></dd></div>
-      </dl>
-      <div class="buy-actions">
-        <a class="btn btn-solid btn-lg" href="#comprar">Comprar con Mercado Pago</a>
-        <a class="btn btn-ghost btn-lg" href="#comprar">Consultar por WhatsApp</a>
+
+      <div class="format-panel" data-formato="papel">
+        <div class="price-row">
+          <span class="price"><span class="fill">$ —</span></span>
+          <span class="price-note">+ envío a todo el país</span>
+        </div>
+        <dl class="specs">
+          <div><dt>Formato</dt><dd>Libro impreso</dd></div>
+          <div><dt>Páginas</dt><dd><span class="fill">[completar]</span></dd></div>
+          <div><dt>Incluye</dt><dd>Ilustraciones y códigos QR</dd></div>
+          <div><dt>Envío</dt><dd><span class="fill">[Correo / Andreani / retiro]</span></dd></div>
+          <div><dt>Llega en</dt><dd><span class="fill">[X a X días hábiles]</span></dd></div>
+        </dl>
+        <div class="buy-actions">
+          <a class="btn btn-solid btn-lg" href="#comprar">Comprar en papel</a>
+          <a class="btn btn-ghost btn-lg" href="#comprar">Consultar por WhatsApp</a>
+        </div>
+        <p class="pay-note">Tarjeta, débito, transferencia o dinero en Mercado Pago. Solo envíos dentro de Argentina.</p>
       </div>
-      <p class="pay-note">Tarjeta, débito, transferencia o dinero en Mercado Pago.</p>
+
+      <div class="format-panel" data-formato="digital" hidden>
+        <div class="price-row">
+          <span class="price"><span class="fill">$ —</span></span>
+          <span class="price-note">sin envío, desde cualquier país</span>
+        </div>
+        <dl class="specs">
+          <div><dt>Formato</dt><dd><span class="fill">[PDF / ePub]</span></dd></div>
+          <div><dt>Páginas</dt><dd><span class="fill">[completar]</span></dd></div>
+          <div><dt>Incluye</dt><dd>Ilustraciones y links directos a mapas y música</dd></div>
+          <div><dt>Entrega</dt><dd><span class="fill">[Por email / WhatsApp]</span></dd></div>
+          <div><dt>Lo recibís</dt><dd><span class="fill">[Al instante / en el día]</span></dd></div>
+        </dl>
+        <div class="buy-actions">
+          <a class="btn btn-solid btn-lg" href="#comprar">Comprar digital</a>
+          <a class="btn btn-ghost btn-lg" href="#comprar">Consultar por WhatsApp</a>
+        </div>
+        <p class="pay-note">Se lee en el celular, la tablet o la computadora.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -434,7 +497,8 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
       <details><summary>¿Es una historia real?</summary><p>Es una novela. La trama es ficción, pero los lugares, las situaciones y la forma de vivir adentro son reales: el autor estuvo ahí.</p></details>
       <details><summary>¿Cómo pago?</summary><p>Con Mercado Pago: tarjeta de crédito, débito, transferencia o dinero en cuenta. Si preferís otra forma, escribime por WhatsApp.</p></details>
       <details><summary>¿Cuánto tarda en llegar?</summary><p><span class="fill">[Completar: días hábiles y empresa de envío.]</span></p></details>
-      <details><summary>¿Envían a España?</summary><p><span class="fill">[Completar: por ahora solo Argentina, o versión digital para el exterior.]</span></p></details>
+      <details><summary>¿Lo puedo comprar desde España u otro país?</summary><p>Sí, en versión digital. El libro en papel por ahora se envía solo dentro de Argentina.</p></details>
+      <details><summary>¿Qué diferencia hay entre papel y digital?</summary><p>La historia y las ilustraciones son las mismas. En papel tenés los códigos QR para escanear con el celular. En digital, los mapas y la música son links directos: tocás y se abren.</p></details>
       <details><summary>¿Cómo funcionan los QR?</summary><p>Los escaneás con la cámara del celular. Algunos abren Google Maps en el lugar de la escena y otros abren la canción que sonaba en ese momento.</p></details>
     </div>
   </div>
@@ -469,6 +533,17 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
     if (!first || typeof first.getAnimations !== 'function') { forceIn(); return; }
     if (!first.getAnimations().some(function (a) { return a.playState === 'running' || a.playState === 'finished'; })) forceIn();
   }); });
+
+  // Selector papel / digital
+  var panels = document.querySelectorAll('.format-panel');
+  function showFormat(value) {
+    panels.forEach(function (p) { p.hidden = p.getAttribute('data-formato') !== value; });
+  }
+  document.querySelectorAll('input[name="formato"]').forEach(function (r) {
+    r.addEventListener('change', function () { if (r.checked) showFormat(r.value); });
+  });
+  var checked = document.querySelector('input[name="formato"]:checked');
+  if (checked) showFormat(checked.value);
 
   var burger = document.querySelector('.burger'), nav = document.getElementById('site-nav');
   function setMenu(open) {

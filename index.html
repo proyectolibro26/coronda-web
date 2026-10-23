@@ -41,6 +41,7 @@ html { scroll-behavior: smooth; }
 body { font-family: var(--sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; overflow-x: hidden; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; }
+[hidden] { display: none !important; }
 a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 /* Marcador de dato a completar */
@@ -214,6 +215,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
 .format-opt input:checked + .format-card svg { color: var(--sodium); }
 .format-opt input:focus-visible + .format-card { outline: 2px solid #fff; outline-offset: 3px; }
 .format-panel .price-row { margin-top: 22px; }
+.soon { margin-top: 20px; max-width: 520px; padding: 14px 16px; border: 1px dashed rgba(214,160,90,.55); border-radius: 8px; color: #e6d3b8; font-size: 15px; line-height: 1.55; }
 .abroad { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 14px; color: var(--muted); max-width: 520px; }
 .abroad a { color: #fff; font-weight: 500; border-bottom: 1px solid var(--sodium); padding-bottom: 1px; }
 .abroad a:hover { color: var(--sodium); }
@@ -320,10 +322,10 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
       <a class="appear appear--scale" style="--d:.16s" href="#historia">La historia</a>
       <a class="appear appear--soft"  style="--d:.28s" href="#que-trae">Qué trae</a>
       <a class="appear appear--scale" style="--d:.40s" href="#autor">El autor</a>
-      <a class="appear appear--soft"  style="--d:.52s" href="#comprar">Comprar</a>
+      <a class="appear appear--soft"  style="--d:.52s" href="#comprar" data-venta-text="Comprar">Ediciones</a>
     </nav>
     <div class="header-right">
-      <a class="btn btn-solid header-cta appear appear--scale" style="--d:.34s" href="#comprar">Comprar el libro</a>
+      <a class="btn btn-solid header-cta appear appear--scale" style="--d:.34s" href="https://wa.me/5493412609941?text=Hola%21%20Avisame%20cuando%20salga%20Ranchada." target="_blank" rel="noopener" data-venta-href="#comprar" data-venta-text="Comprar el libro">Avisame cuando salga</a>
       <button class="burger appear appear--scale" style="--d:.34s" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Abrir menú"><span></span><span></span><span></span></button>
     </div>
   </header>
@@ -332,7 +334,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
     <div class="hero-copy">
       <span class="badge appear appear--pop" style="--d:.22s">
         <svg class="badge-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6C12.55 2.6 12.88 3.15 13.08 4.7c.62 4.7 1.52 5.6 6.22 6.22 1.55.2 2.1.53 2.1 1.08s-.55.88-2.1 1.08c-4.7.62-5.6 1.52-6.22 6.22-.2 1.55-.53 2.1-1.08 2.1s-.88-.55-1.08-2.1c-.62-4.7-1.52-5.6-6.22-6.22C3.15 12.88 2.6 12.55 2.6 12s.55-.88 2.1-1.08c4.7-.62 5.6-1.52 6.22-6.22C11.12 3.15 11.45 2.6 12 2.6Z"/></svg>
-        Novela · En papel y digital
+        <span data-venta-text="Novela · En papel y digital">Novela · Próximamente en papel y digital</span>
       </span>
       <h1>
         <span class="headline-line"><span class="appear appear--mask" style="--d:.42s;display:inline-block">Fui policía. Estuve preso.</span></span>
@@ -340,7 +342,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
       </h1>
       <p class="lede appear appear--soft" style="--d:.82s;animation-duration:1.25s">Una novela de cárcel escrita por alguien que estuvo adentro. La trama es ficción. Trelew, Coronda y Piñero son reales, y el autor pasó por los tres.</p>
       <div class="hero-actions">
-        <a class="btn btn-solid btn-lg appear appear--btn" style="--d:.96s" href="#comprar">Comprar el libro</a>
+        <a class="btn btn-solid btn-lg appear appear--btn" style="--d:.96s" href="https://wa.me/5493412609941?text=Hola%21%20Avisame%20cuando%20salga%20Ranchada." target="_blank" rel="noopener" data-venta-href="#comprar" data-venta-text="Comprar el libro">Avisame cuando salga</a>
         <a class="btn btn-ghost btn-lg appear appear--side" style="--d:1.10s" href="#comienzo">Leer cómo empieza</a>
       </div>
     </div>
@@ -416,7 +418,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
   <div class="wrap author">
     <div class="portrait"><span>[Tu foto o un autorretrato en lapicera]</span></div>
     <div>
-      <span class="eyebrow">El autor</span>
+      <span class="eyebrow">El autor · LT</span>
       <h2 class="h2">Estuve en los dos lados <em>de la reja.</em></h2>
       <div class="prose">
         <p>Tengo 35 años. Fui policía de Infantería y terminé preso. Adentro conocí a gente que no sale en las noticias y aprendí códigos que no se enseñan en ningún lado.</p>
@@ -445,6 +447,8 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
     <div>
       <span class="eyebrow">Elegí tu edición</span>
       <h2 class="h2">En papel o <em>en tu celular.</em></h2>
+
+      <p class="soon solo-espera">Lo estoy terminando. Todavía no está a la venta: tocá "Avisame cuando salga" y te escribo por WhatsApp apenas esté listo, con el precio de lanzamiento.</p>
 
       <div class="format-picker" role="radiogroup" aria-label="Formato del libro">
         <label class="format-opt">
@@ -478,8 +482,8 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
           <div><dt>Llega en</dt><dd><span class="fill">[X a X días hábiles]</span></dd></div>
         </dl>
         <div class="buy-actions">
-          <a class="btn btn-solid btn-lg" href="https://mpago.la/15eVAro" target="_blank" rel="noopener">Comprar en papel</a>
-          <a class="btn btn-ghost btn-lg" href="https://wa.me/5493412609941?text=Hola%21%20Quiero%20el%20libro%20Ranchada%20en%20papel.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+          <a class="btn btn-solid btn-lg" href="https://wa.me/5493412609941?text=Hola%21%20Avisame%20cuando%20salga%20Ranchada%20en%20papel." target="_blank" rel="noopener" data-venta-href="https://mpago.la/15eVAro" data-venta-text="Comprar en papel">Avisame cuando salga en papel</a>
+          <a class="btn btn-ghost btn-lg solo-venta" href="https://wa.me/5493412609941?text=Hola%21%20Quiero%20el%20libro%20Ranchada%20en%20papel.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener" hidden>Consultar por WhatsApp</a>
         </div>
         <p class="pay-note">Tarjeta, débito, transferencia o dinero en Mercado Pago. Solo envíos dentro de Argentina.</p>
       </div>
@@ -497,11 +501,11 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
           <div><dt>Lo recibís</dt><dd><span class="fill">[Al instante / en el día]</span></dd></div>
         </dl>
         <div class="buy-actions">
-          <a class="btn btn-solid btn-lg" href="https://mpago.la/32D3UEs" target="_blank" rel="noopener">Comprar digital</a>
-          <a class="btn btn-ghost btn-lg" href="https://wa.me/5493412609941?text=Hola%21%20Quiero%20el%20libro%20Ranchada%20en%20digital.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+          <a class="btn btn-solid btn-lg" href="https://wa.me/5493412609941?text=Hola%21%20Avisame%20cuando%20salga%20Ranchada%20en%20digital." target="_blank" rel="noopener" data-venta-href="https://mpago.la/32D3UEs" data-venta-text="Comprar digital">Avisame cuando salga en digital</a>
+          <a class="btn btn-ghost btn-lg solo-venta" href="https://wa.me/5493412609941?text=Hola%21%20Quiero%20el%20libro%20Ranchada%20en%20digital.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener" hidden>Consultar por WhatsApp</a>
         </div>
         <p class="pay-note">Se lee en el celular, la tablet o la computadora.</p>
-        <div class="abroad">
+        <div class="abroad solo-venta" hidden>
           <span>¿Estás fuera de Argentina?</span>
           <a href="https://www.paypal.com/ncp/payment/JDMS7DYH9J32L" target="_blank" rel="noopener">Pagar USD 7 con PayPal</a>
         </div>
@@ -530,7 +534,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
   <div class="wrap">
     <h2 class="h2">Yo estuve adentro. <em>Ahora entrás vos.</em></h2>
     <div class="hero-actions">
-      <a class="btn btn-solid btn-lg" href="#comprar">Comprar el libro</a>
+      <a class="btn btn-solid btn-lg" href="https://wa.me/5493412609941?text=Hola%21%20Avisame%20cuando%20salga%20Ranchada." target="_blank" rel="noopener" data-venta-href="#comprar" data-venta-text="Comprar el libro">Avisame cuando salga</a>
     </div>
   </div>
 </section>
@@ -555,6 +559,21 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
     if (!first || typeof first.getAnimations !== 'function') { forceIn(); return; }
     if (!first.getAnimations().some(function (a) { return a.playState === 'running' || a.playState === 'finished'; })) forceIn();
   }); });
+
+  // Modo de la página: false = 'Avisame cuando salga'; true = venta abierta (botones de pago)
+  var VENTA_ABIERTA = false;
+  if (VENTA_ABIERTA) {
+    document.querySelectorAll('[data-venta-text]').forEach(function (el) {
+      el.textContent = el.getAttribute('data-venta-text');
+    });
+    document.querySelectorAll('[data-venta-href]').forEach(function (el) {
+      var h = el.getAttribute('data-venta-href');
+      el.setAttribute('href', h);
+      if (h.charAt(0) === '#') { el.removeAttribute('target'); el.removeAttribute('rel'); }
+    });
+    document.querySelectorAll('.solo-venta').forEach(function (el) { el.hidden = false; });
+    document.querySelectorAll('.solo-espera').forEach(function (el) { el.hidden = true; });
+  }
 
   // Selector papel / digital
   var panels = document.querySelectorAll('.format-panel');

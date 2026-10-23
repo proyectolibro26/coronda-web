@@ -163,26 +163,18 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
 .feature p { color: var(--muted); font-size: 15px; line-height: 1.6; }
 
 /* Autor */
-.author { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; align-items: start; }
-.portrait { aspect-ratio: 4 / 5; max-width: 100%; border: 1px dashed rgba(214,160,90,.6); display: grid; place-items: center; text-align: center; padding: 16px; color: var(--sodium); font-size: 13px; line-height: 1.5;
-  background: repeating-linear-gradient(90deg, #070707 0 22px, #0e0e0e 22px 26px); }
+.author { display: block; }
 .timeline { margin-top: 32px; display: grid; gap: 0; max-width: 560px; border-top: 1px solid var(--line); }
 .timeline li { list-style: none; display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
 .timeline .t { color: var(--muted); font-variant-numeric: tabular-nums; }
 
 /* Compra */
 .buy { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 64px; align-items: center; }
-.cover { position: relative; aspect-ratio: 2 / 3; max-width: 100%; border-radius: 3px 8px 8px 3px; overflow: hidden;
-  background: radial-gradient(70% 50% at 70% 22%, rgba(214,160,90,.45), transparent 70%), #050505;
-  box-shadow: -14px 0 0 -10px #1a1a1a, 0 30px 60px rgba(0,0,0,.7), inset 3px 0 0 rgba(255,255,255,.08);
-  display: flex; flex-direction: column; justify-content: flex-end; padding: 28px 24px; }
-.cover::before { content: ""; position: absolute; inset: 0;
-  background: repeating-linear-gradient(90deg, transparent 0 34px, rgba(0,0,0,.85) 34px 44px);
-  -webkit-mask-image: linear-gradient(180deg, #000 10%, transparent 70%); mask-image: linear-gradient(180deg, #000 10%, transparent 70%); }
-.cover > * { position: relative; }
-.cover-title { font-family: var(--serif); font-size: 44px; line-height: 1; letter-spacing: -.02em; }
-.cover-sub { margin-top: 10px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.cover-tag { position: absolute; top: 16px; left: 16px; font-size: 11px; color: var(--sodium); border: 1px dashed rgba(214,160,90,.6); padding: 4px 8px; }
+.cover { position: relative; max-width: 100%; border-radius: 3px 8px 8px 3px; overflow: hidden; background: #050505;
+  box-shadow: -14px 0 0 -10px #1a1a1a, 0 30px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.06); }
+.cover img { display: block; width: 100%; height: auto; aspect-ratio: 720 / 1020; }
+.cover::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 18px; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,.55), rgba(255,255,255,.08) 55%, transparent); }
 
 .price-row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
 .price { font-size: 46px; font-weight: 600; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
@@ -292,8 +284,6 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
   .stat { white-space: normal; }
   .section { padding-block: 72px; }
   .features { grid-template-columns: minmax(0, 1fr); }
-  .author { grid-template-columns: minmax(0, 1fr); gap: 32px; }
-  .portrait { max-width: 220px; }
   .buy { grid-template-columns: minmax(0, 1fr); gap: 40px; }
   .cover { max-width: 280px; margin: 0 auto; width: 100%; }
   .timeline li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
@@ -419,7 +409,6 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
 <!-- AUTOR -->
 <section class="section" id="autor">
   <div class="wrap author">
-    <div class="portrait"><span>[Tu foto o un autorretrato en lapicera]</span></div>
     <div>
       <span class="eyebrow">El autor · LT</span>
       <h2 class="h2">Estuve en los dos lados <em>de la reja.</em></h2>
@@ -442,11 +431,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(
 <!-- COMPRAR -->
 <section class="section" id="comprar">
   <div class="wrap buy">
-    <div class="cover" aria-label="Tapa provisoria del libro">
-      <span class="cover-tag">Tapa provisoria</span>
-      <div class="cover-title">Ranchada</div>
-      <div class="cover-sub">Mantenelo vivo</div>
-    </div>
+    <div class="cover"><img src="tapa.webp" width="720" height="1020" loading="lazy" alt="Tapa de Ranchada. Mantenelo vivo, de LT: dibujo en lapicera de una celda vista desde la cucheta"></div>
     <div>
       <span class="eyebrow">Elegí tu edición</span>
       <h2 class="h2">En papel o <em>en tu celular.</em></h2>

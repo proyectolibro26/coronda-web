@@ -227,7 +227,7 @@ img { display: block; max-width: 100%; }
   .c--img { display: none; }
   .date { order: 2; font-size: calc(12 * var(--u)); }
   .title { order: 3; margin-top: calc(10 * var(--u)); }
-  .title h1 { font-size: calc(68 * var(--u)); }
+  .title h1 { font-size: calc(58 * var(--u)); white-space: nowrap; }
   .title .yr { left: auto; right: 0; top: calc(-14 * var(--u)); }
   .about { order: 4; width: auto; top: auto; }
   .photo { order: 5; width: calc(100% + 32 * var(--u)); margin: 0 calc(-16 * var(--u)); height: calc(470 * var(--u)); }
@@ -536,6 +536,21 @@ img { display: block; max-width: 100%; }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
   onScroll();
+})();
+</script>
+<script>
+/* Achica el título si no entra en el ancho (celulares angostos o fuente distinta) */
+(function () {
+  function fit() {
+    var h = document.querySelector('.title h1'); if (!h) return;
+    h.style.fontSize = '';
+    var t = h.querySelector('.mask > span') || h;
+    var box = h.parentElement.clientWidth, w = t.scrollWidth, n = 0;
+    var size = parseFloat(getComputedStyle(h).fontSize);
+    while (w > box && n++ < 40) { size *= 0.97; h.style.fontSize = size + 'px'; w = t.scrollWidth; }
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  window.addEventListener('load', fit); window.addEventListener('resize', fit);
 })();
 </script>
 </body>

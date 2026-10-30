@@ -3,598 +3,555 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
 <title>Ranchada · Mantenelo vivo</title>
-<meta name="description" content="Fui policía. Estuve preso. Volví a entrar por un amigo. Una novela de cárcel escrita por alguien que estuvo adentro.">
-<meta name="theme-color" content="#000000">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ranchada · Mantenelo vivo">
-<meta property="og:description" content="Fui policía. Estuve preso. Volví a entrar por un amigo.">
-<meta property="og:image" content="/og.jpg">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Ranchada. Mantenelo vivo. Una novela de LT, basada en lo vivido. Preventa abierta: papel firmado y dedicado o digital.">
+<meta property="og:image" content="https://ranchada.com.ar/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900&family=Instrument+Serif:ital@0;1&display=swap">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Crect x='3' y='2.5' width='18' height='19' rx='3' fill='none' stroke='white' stroke-width='1.8'/%3E%3Crect x='7' y='5' width='1.8' height='14' rx='.9'/%3E%3Crect x='11.1' y='5' width='1.8' height='14' rx='.9'/%3E%3Crect x='15.2' y='5' width='1.8' height='14' rx='.9'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&family=Archivo:wdth,wght@62..125,100..900&display=swap">
 <style>
-html, body { background: #000000 !important; color: #ffffff; }
-/* Layout: hero a pantalla completa (luz de celda entre rejas) y debajo una página de venta que se lee de corrido: historia, fragmento, qué trae, autor, compra, preguntas. */
+/* Alternativa editorial monocroma: hero en papel gris con el dibujo de la celda en tinta, manifiesto que se enciende al bajar, panel del autor y preventa. Todo se mide en u (artboard de 1440). */
 :root {
-  color-scheme: dark;
-  --bg: #000000;
-  --surface: #0d0c0b;
-  --line: rgba(255,255,255,.12);
-  --text: #ffffff;
-  --muted: #9a9a9a;
-  --stat: #d8d8d8;
-  --sodium: #d6a05a;
-  --sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --serif: "Instrument Serif", "Times New Roman", Times, serif;
-
-  --logo: 15.5px; --nav: 14px; --nav-h: 40px; --btn: 13.5px; --btn-h: 40px; --hero-btn-h: 44px;
-  --h1: 52px; --lede: 16px; --badge: 12.5px; --stat-size: 13.5px;
-  --gutter: 40px; --hero-gap: 72px;
-  --h2: 40px; --body: 17px;
+  --u: min(calc(100vw / 1440), 1.333px);
+  --paper: #dadada; --ink: #111; --black: #000; --text: #f4f4f4; --grey: #6f6f6f;
+  --line: rgba(255,255,255,.14); --line2: rgba(255,255,255,.28);
+  --wide: "Archivo", "Arial Narrow", sans-serif;
+  --ui: "Inter Tight", "Inter", system-ui, sans-serif;
 }
-html, body { background: var(--bg); color: var(--text); }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: var(--sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; overflow-x: hidden; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { background: var(--black); color: var(--text); font-family: var(--ui); font-weight: 500; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
-button { font-family: inherit; }
+img { display: block; max-width: 100%; }
 [hidden] { display: none !important; }
-a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.u { font-size: calc(14 * var(--u)); }
+.w { font-family: var(--wide); font-stretch: 104%; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 
-/* Marcador de dato a completar */
-.fill { color: var(--sodium); border-bottom: 1px dashed var(--sodium); }
-
-.grain {
-  position: fixed; inset: 0; z-index: 100; pointer-events: none; opacity: .13; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.wrap { width: 100%; max-width: 1080px; margin: 0 auto;
-  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px)); padding-right: max(var(--gutter), env(safe-area-inset-right, 0px)); }
+/* ---------- Botones ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: calc(8 * var(--u)); height: calc(46 * var(--u)); padding: 0 calc(20 * var(--u)); border-radius: 999px; font-size: calc(14 * var(--u)); font-weight: 500; letter-spacing: -.01em; background: var(--ink); color: #fff; transition: transform .2s ease, background-color .2s ease; white-space: nowrap; }
+.btn:hover { transform: translateY(-1px); }
+.btn--light { background: #fff; color: var(--ink); }
+.btn--line { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1px var(--line2); }
+.btn--line:hover { box-shadow: inset 0 0 0 1px rgba(255,255,255,.6); }
+.arrow { font-size: 1.05em; line-height: 1; }
 
 /* ---------- Hero ---------- */
-.top { position: relative; display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh; min-height: 100svh; isolation: isolate; }
-.hero-photo {
-  position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
-  background: #000;
-  animation: in-light 2.4s cubic-bezier(.16,1,.3,1) both;
-}
-/* Dibujo del autor: celda vista desde la cucheta */
-.hero-photo::before {
-  content: ""; position: absolute; inset: 0;
-  background: url("celda.webp") center top / cover no-repeat;
-  opacity: .62;
-}
-.hero-photo::after { content: ""; position: absolute; inset: 0;
-  background:
-    radial-gradient(55% 45% at 60% 20%, rgba(214,160,90,.16), transparent 70%),
-    linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.05) 22%, rgba(0,0,0,.55) 52%, rgba(0,0,0,.92) 72%, #000 100%); }
+.hero { position: relative; height: calc(938 * var(--u)); background: var(--paper); color: var(--ink); overflow: hidden; }
+.hero > * { position: absolute; }
+.photo { left: calc(338 * var(--u)); top: calc(-86 * var(--u)); width: calc(764 * var(--u)); height: calc(1024 * var(--u)); }
+.photo-img { width: 100%; height: 100%; object-fit: cover; object-position: center top;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%), linear-gradient(180deg, #000 82%, transparent 100%); -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%), linear-gradient(180deg, #000 82%, transparent 100%); mask-composite: intersect;
+  will-change: transform; }
+.plate { position: absolute; left: calc(194 * var(--u)); top: calc(530 * var(--u)); width: calc(364 * var(--u)); height: calc(73 * var(--u)); border-radius: calc(14 * var(--u));
+  background: rgba(17,17,17,.78); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); color: #fff;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 calc(22 * var(--u)); box-shadow: 0 10px 40px rgba(0,0,0,.25); }
+.seal { width: calc(38 * var(--u)); height: calc(38 * var(--u)); border-radius: 50%; border: 1.5px solid rgba(255,255,255,.8); display: grid; place-items: center; font-family: var(--wide); font-stretch: 110%; font-size: calc(12 * var(--u)); letter-spacing: .12em; padding-left: .12em; }
+.plate-name { font-family: var(--wide); font-stretch: 125%; font-weight: 600; font-size: calc(25 * var(--u)); letter-spacing: .02em; }
+.burger { width: calc(26 * var(--u)); display: grid; gap: calc(7 * var(--u)); }
+.burger i { display: block; height: 1.5px; background: #fff; }
+.burger i:last-child { width: 62%; justify-self: end; }
+.places { position: absolute; left: 0; right: 0; top: calc(950 * var(--u)); display: flex; justify-content: center; gap: calc(46 * var(--u)); font-family: var(--wide); font-stretch: 112%; font-weight: 600; font-size: calc(17 * var(--u)); letter-spacing: .04em; text-transform: uppercase; color: var(--ink); }
+.places span { opacity: .85; padding: 2px 8px; border-radius: 4px; background: rgba(218,218,218,.82); }
 
-.header {
-  position: relative; z-index: 50; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
-  padding-top: 22px; padding-bottom: 10px;
-  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px)); padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
-}
-.logo { display: inline-flex; align-items: center; gap: 9px; justify-self: start; font-size: var(--logo); font-weight: 600; letter-spacing: -.03em; }
-.logo svg { width: 22px; height: 22px; }
-.logo-suffix { font-weight: 400; color: var(--muted); }
+.nav { left: calc(57 * var(--u)); top: calc(61 * var(--u)); height: calc(48 * var(--u)); padding: calc(4 * var(--u)); border-radius: 999px; background: #fff; display: flex; align-items: center; }
+.nav a { position: relative; z-index: 1; height: 100%; display: flex; align-items: center; padding: 0 calc(18 * var(--u)); border-radius: 999px; font-size: calc(14 * var(--u)); color: var(--ink); transition: color .25s ease; }
+.nav a.on { color: #fff; }
+.nav-pill { position: absolute; z-index: 0; top: calc(4 * var(--u)); bottom: calc(4 * var(--u)); left: 0; width: 0; border-radius: 999px; background: var(--ink); transition: transform .35s cubic-bezier(.3,.7,.2,1), width .35s cubic-bezier(.3,.7,.2,1); }
+.date { left: calc(1112 * var(--u)); top: calc(70 * var(--u)); font-size: calc(13 * var(--u)); line-height: 1.35; }
+.date b { font-weight: 600; }
+.date span { color: #555; }
+.cta { left: calc(1237 * var(--u)); top: calc(63 * var(--u)); width: calc(144 * var(--u)); }
 
-#site-nav { display: flex; align-items: center; gap: 8px; justify-self: center; }
-#site-nav a {
-  position: relative; overflow: hidden; display: inline-flex; align-items: center; height: var(--nav-h); padding: 0 18px; border-radius: 7px;
-  border: 1px solid rgba(198,198,198,.55); background: linear-gradient(105deg, #050505 0%, #2a2a2a 48%, #4a4a4a 100%);
-  color: #f3f3f3; font-size: var(--nav); letter-spacing: -.01em; white-space: nowrap;
-  transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
-}
-#site-nav a::before { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.16) 50%, transparent 70%); transform: translateX(-120%); transition: transform .6s ease; }
-#site-nav a:hover { border-color: rgba(235,235,235,.9); background: linear-gradient(105deg, #111 0%, #3a3a3a 45%, #6a6a6a 100%); box-shadow: 0 0 18px rgba(200,210,230,.18); }
-#site-nav a:hover::before { transform: translateX(120%); }
-.header-right { justify-self: end; display: flex; align-items: center; gap: 8px; }
-.burger { display: none; place-content: center; gap: 5px; width: 42px; height: 42px; border-radius: 6px; border: 1px solid rgba(255,255,255,.16); background: rgba(8,8,8,.55); cursor: pointer; position: relative; z-index: 60; }
-.burger span { display: block; width: 16px; height: 1.5px; border-radius: 1px; background: #fff; transition: transform .25s ease, opacity .2s ease; }
-body.menu-open .burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-body.menu-open .burger span:nth-child(2) { opacity: 0; }
-body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-.menu-backdrop { display: none; }
+.title { left: calc(57 * var(--u)); top: calc(246 * var(--u)); }
+.title h1 { font-family: var(--wide); font-stretch: 104%; font-weight: 640; font-size: calc(90 * var(--u)); line-height: .86; letter-spacing: -.06em; text-transform: uppercase; }
+.title .mask { display: block; overflow: hidden; padding-bottom: .04em; }
+.title .mask > span { display: block; }
+.title-sub { margin-top: calc(14 * var(--u)); font-family: var(--wide); font-stretch: 104%; font-weight: 500; font-size: calc(34 * var(--u)); line-height: 1; letter-spacing: -.045em; color: #3a3a3a; }
+.title .yr { position: absolute; left: calc(240 * var(--u)); top: calc(-22 * var(--u)); font-size: calc(15 * var(--u)); letter-spacing: -.01em; }
 
-.btn {
-  position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  height: var(--btn-h); padding: 0 16px; border-radius: 6px; font-size: var(--btn); font-weight: 500; letter-spacing: -.02em; line-height: 1; white-space: nowrap; cursor: pointer;
-  transition: background .35s, border-color .35s, box-shadow .35s, color .35s;
-}
-.btn::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,.45) 48%, transparent 76%); transform: translateX(-130%); transition: transform .65s ease; }
-.btn:hover::after { transform: translateX(130%); }
-.btn-solid { background: linear-gradient(180deg, #ffffff 0%, #e7e7e7 48%, #cfcfcf 100%); color: #111; border: 1px solid #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.95); }
-.btn-solid:hover { background: linear-gradient(180deg, #fff 0%, #fbf3e8 42%, #e6d3b8 100%); box-shadow: inset 0 1px 0 #fff, 0 0 24px rgba(214,160,90,.38), 0 8px 18px rgba(255,255,255,.12); }
-.btn-ghost {
-  background: linear-gradient(135deg, rgba(255,255,255,.12), rgba(0,0,0,.5) 46%, rgba(150,170,200,.1)); color: #fff;
-  border: 1px solid rgba(198,198,198,.55); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-}
-.btn-ghost:hover { border-color: rgba(240,225,205,.8); box-shadow: 0 0 24px rgba(214,160,90,.28); }
-.btn-lg { height: var(--hero-btn-h); padding: 0 20px; font-size: 14.5px; }
+.about { left: calc(57 * var(--u)); top: calc(458 * var(--u)); width: calc(330 * var(--u)); }
+.kicker { font-size: calc(13 * var(--u)); letter-spacing: .02em; display: flex; align-items: center; gap: calc(8 * var(--u)); }
+.kicker::before { content: ""; width: calc(7 * var(--u)); height: calc(7 * var(--u)); border-radius: 50%; background: currentColor; }
+.about p { margin-top: calc(18 * var(--u)); font-size: calc(14 * var(--u)); line-height: 1.5; color: #222; }
+.about .btn { margin-top: calc(26 * var(--u)); }
 
-.hero { display: flex; align-items: flex-end; justify-content: center; min-height: 0; padding-top: 8px; padding-bottom: var(--hero-gap);
-  padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
-.hero-copy { display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 900px; width: 100%; }
-.badge { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 22px; padding: 9px 15px; border-radius: 5px;
-  background: linear-gradient(90deg, #7d7d7d 0%, #2a2a2a 52%, #0a0a0a 100%); color: #f2f2f2; font-size: var(--badge); letter-spacing: -.01em; }
-.badge-star { width: 18px; height: 20px; fill: #fff; filter: drop-shadow(0 0 3px rgba(255,255,255,.45)); animation: in-star .9s cubic-bezier(.16,1,.3,1) .28s both; }
-.hero h1 { display: flex; flex-direction: column; align-items: center; font-size: var(--h1); font-weight: 500; letter-spacing: -.045em; line-height: 1.12; text-wrap: balance; }
-.headline-line { display: block; overflow: hidden; padding: .06em .15em .14em; }
-.hero h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.08em; letter-spacing: -.03em; color: var(--muted); animation: in-em 1.2s cubic-bezier(.16,1,.3,1) .72s both; }
-.lede { max-width: 520px; margin-top: 18px; color: var(--muted); font-size: var(--lede); line-height: 1.55; letter-spacing: -.015em; text-wrap: pretty; }
-.hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 26px; }
+.stats { left: calc(57 * var(--u)); top: calc(693 * var(--u)); width: calc(341 * var(--u)); height: calc(208 * var(--u)); padding: calc(6 * var(--u)); border-radius: calc(12 * var(--u)); background: #cdcdcd; display: grid; grid-template-columns: 1fr 1fr; gap: calc(6 * var(--u)); }
+.card-d { border-radius: calc(8 * var(--u)); background: var(--ink); color: #fff; padding: calc(14 * var(--u)); display: flex; flex-direction: column; }
+.big { font-family: var(--wide); font-stretch: 104%; font-weight: 640; letter-spacing: -.05em; line-height: .95; }
+.card-d .big { font-size: calc(30 * var(--u)); }
+.card-d small { display: block; margin-top: calc(4 * var(--u)); font-size: calc(11.5 * var(--u)); color: #bdbdbd; line-height: 1.3; }
+.ticks { margin-top: auto; display: grid; gap: calc(4 * var(--u)); font-size: calc(10.5 * var(--u)); color: #d6d6d6; }
+.ticks span::before { content: "✓ "; color: #fff; }
+.bar-btn { margin-top: calc(10 * var(--u)); height: calc(30 * var(--u)); border-radius: calc(6 * var(--u)); background: #fff; color: var(--ink); display: flex; align-items: center; justify-content: space-between; padding: 0 calc(10 * var(--u)); font-size: calc(12 * var(--u)); transition: transform .2s ease; }
+.bar-btn:hover { transform: translateY(-1px); }
+.card-p { position: relative; border-radius: calc(8 * var(--u)); overflow: hidden; background: #050505; color: #fff; }
+.card-p img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .75; }
+.card-p .top { position: absolute; left: calc(12 * var(--u)); right: calc(12 * var(--u)); top: calc(12 * var(--u)); padding-top: calc(8 * var(--u)); border-top: 1px solid rgba(255,255,255,.5); font-size: calc(10.5 * var(--u)); display: flex; justify-content: space-between; }
+.card-p .bot { position: absolute; right: calc(12 * var(--u)); bottom: calc(12 * var(--u)); text-align: right; }
+.card-p .big { font-size: calc(30 * var(--u)); }
+.card-p small { display: block; font-size: calc(10.5 * var(--u)); color: #ddd; line-height: 1.3; margin-top: calc(3 * var(--u)); }
 
-.stats { display: flex; align-items: center; justify-content: space-between; gap: 24px; color: var(--stat);
-  padding-bottom: max(36px, env(safe-area-inset-bottom, 0px));
-  padding-left: max(72px, env(safe-area-inset-left, 0px)); padding-right: max(72px, env(safe-area-inset-right, 0px)); }
-.stat { display: inline-flex; align-items: center; gap: 14px; font-size: var(--stat-size); letter-spacing: -.015em; white-space: nowrap; }
-.stat svg { width: 20px; height: 20px; flex: none; color: #e8e8e8; }
-.stat b { font-weight: 600; color: #fff; }
+.pill { left: calc(1185 * var(--u)); top: calc(258 * var(--u)); height: calc(44 * var(--u)); padding: 0 calc(6 * var(--u)) 0 calc(18 * var(--u)); border-radius: 999px; background: rgba(255,255,255,.55); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); display: flex; align-items: center; gap: calc(12 * var(--u)); font-size: calc(14 * var(--u)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.7); }
+.pill i { width: calc(32 * var(--u)); height: calc(32 * var(--u)); border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-style: normal; font-size: calc(14 * var(--u)); }
+.avail { right: calc(57 * var(--u)); top: calc(442 * var(--u)); text-align: right; font-family: var(--wide); font-stretch: 104%; font-weight: 600; font-size: calc(26 * var(--u)); line-height: 1.02; letter-spacing: -.04em; }
+.avail .dot { display: inline-block; width: calc(10 * var(--u)); height: calc(10 * var(--u)); border-radius: 50%; background: var(--ink); vertical-align: middle; margin-right: calc(8 * var(--u)); animation: blink 1.6s ease-in-out infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+.out { right: calc(57 * var(--u)); top: calc(560 * var(--u)); width: calc(226 * var(--u)); }
+.out-head { display: flex; justify-content: space-between; align-items: end; font-size: calc(13 * var(--u)); line-height: 1.3; }
+.out-head b { display: block; font-family: var(--wide); font-stretch: 104%; font-weight: 640; font-size: calc(19 * var(--u)); letter-spacing: -.03em; }
+.out-head span { color: #555; }
+.out-card { position: relative; display: block; margin-top: calc(10 * var(--u)); height: calc(196 * var(--u)); border-radius: calc(10 * var(--u)); overflow: hidden; background: #050505; }
+.out-card img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 94%; transition: transform .6s cubic-bezier(.3,.7,.2,1); }
+.out-card:hover img { transform: scale(1.08); }
+.round { position: absolute; right: calc(10 * var(--u)); bottom: calc(10 * var(--u)); width: calc(40 * var(--u)); height: calc(40 * var(--u)); border-radius: 50%; background: rgba(255,255,255,.22); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: #fff; display: grid; place-items: center; font-size: calc(16 * var(--u)); transition: transform .35s ease; }
+.out-card:hover .round { transform: rotate(45deg); }
+.progress { margin-top: calc(14 * var(--u)); height: 2px; background: rgba(17,17,17,.18); border-radius: 2px; overflow: hidden; }
+.progress i { display: block; height: 100%; width: 62%; background: var(--ink); transform-origin: left; }
+.progress-note { margin-top: calc(7 * var(--u)); font-size: calc(11.5 * var(--u)); color: #444; display: flex; justify-content: space-between; }
 
-/* ---------- Secciones de venta ---------- */
-.section { padding-block: 104px; border-top: 1px solid var(--line); }
-.eyebrow { display: block; margin-bottom: 18px; color: var(--sodium); font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
-.h2 { font-size: var(--h2); font-weight: 500; letter-spacing: -.04em; line-height: 1.1; text-wrap: balance; max-width: 760px; }
-.h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--muted); letter-spacing: -.02em; }
-.prose { max-width: 640px; margin-top: 28px; display: grid; gap: 18px; color: #cfcfcf; font-size: var(--body); line-height: 1.7; }
-.prose strong { color: #fff; font-weight: 600; }
+/* ---------- Barra ---------- */
+.bar { height: calc(111 * var(--u)); border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 calc(57 * var(--u)); font-family: var(--wide); font-stretch: 112%; font-weight: 600; font-size: calc(14 * var(--u)); letter-spacing: .06em; text-transform: uppercase; }
+.bar .g { color: var(--grey); }
+.bar .mid { display: flex; align-items: center; gap: calc(12 * var(--u)); }
+.bar .mid i { width: calc(34 * var(--u)); height: calc(34 * var(--u)); border-radius: 50%; background: #fff; color: #000; display: grid; place-items: center; font-style: normal; font-size: calc(14 * var(--u)); }
+.bar .r { text-align: right; }
 
-/* Definición de la palabra */
-.define { margin-top: 36px; max-width: 640px; padding-left: 18px; border-left: 2px solid var(--sodium); display: grid; gap: 6px; }
-.define-word { font-family: var(--serif); font-style: italic; font-size: 28px; line-height: 1.1; }
-.define-word small { font-family: var(--sans); font-style: normal; font-size: 13px; color: var(--muted); margin-left: 10px; letter-spacing: .02em; }
-.define p { color: #cfcfcf; font-size: 16px; line-height: 1.6; }
+/* ---------- Manifiesto ---------- */
+.statement { padding: calc(170 * var(--u)) calc(24 * var(--u)) calc(190 * var(--u)); }
+.statement-text { width: min(100%, calc(830 * var(--u))); margin: 0 auto; text-align: center; font-size: calc(52 * var(--u)); line-height: 1.33; letter-spacing: -.028em; font-weight: 500; }
+.statement-text .wd { color: var(--grey); transition: color .15s linear; }
+.sub { width: min(100%, calc(830 * var(--u))); margin: calc(150 * var(--u)) auto 0; text-align: center; font-size: calc(23 * var(--u)); line-height: 1.35; letter-spacing: -.02em; }
+.sub em { font-style: normal; color: var(--grey); }
+.excerpt { width: min(100%, calc(830 * var(--u))); margin: calc(110 * var(--u)) auto 0; border-top: 1px solid var(--line2); padding-top: calc(28 * var(--u)); display: grid; grid-template-columns: calc(180 * var(--u)) 1fr; gap: calc(24 * var(--u)); }
+.excerpt .kicker { color: var(--grey); align-self: start; }
+.excerpt blockquote { font-size: calc(21 * var(--u)); line-height: 1.55; letter-spacing: -.012em; color: #d8d8d8; }
+.excerpt blockquote b { color: #fff; font-weight: 600; }
+.excerpt p { margin-top: calc(18 * var(--u)); font-size: calc(14 * var(--u)); color: var(--grey); }
 
-/* Fragmento */
-.excerpt { margin-top: 40px; max-width: 720px; padding: 40px 0 0; border-top: 1px solid var(--line); }
-.excerpt-meta { display: flex; gap: 14px; flex-wrap: wrap; color: var(--muted); font-size: 13px; margin-bottom: 22px; font-variant-numeric: tabular-nums; }
-.excerpt-meta span + span::before { content: "·"; margin-right: 14px; }
-.excerpt blockquote { font-family: var(--serif); font-size: clamp(24px, 3.2vw, 32px); line-height: 1.35; color: #ececec; }
-.excerpt .note { margin-top: 20px; font-size: 14px; color: var(--muted); }
+/* ---------- Panel del autor ---------- */
+.trust { padding: 0 calc(24 * var(--u)) calc(150 * var(--u)); }
+.panel { position: relative; width: min(100%, calc(1302 * var(--u))); margin: 0 auto; min-height: calc(429 * var(--u)); border: 1px solid var(--line2); border-radius: calc(14 * var(--u)); padding: calc(46 * var(--u)) 0 calc(46 * var(--u)) calc(50 * var(--u)); display: grid; grid-template-columns: calc(470 * var(--u)) 1fr; gap: calc(30 * var(--u)); overflow: hidden; }
+.panel-head { position: relative; }
+.panel-head h2 { font-size: calc(55 * var(--u)); font-weight: 500; line-height: 1.02; letter-spacing: -.045em; }
+.panel-head p { margin-top: calc(26 * var(--u)); font-size: calc(14.5 * var(--u)); line-height: 1.5; color: #a8a8a8; max-width: calc(360 * var(--u)); }
+.tile { position: absolute; width: calc(88 * var(--u)); height: calc(88 * var(--u)); border-radius: calc(12 * var(--u)); background: rgba(255,255,255,.08); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); display: grid; place-items: center; }
+.tile--a { left: calc(300 * var(--u)); top: calc(-18 * var(--u)); }
+.tile--b { left: calc(372 * var(--u)); top: calc(118 * var(--u)); }
+.tile svg { width: calc(34 * var(--u)); height: calc(34 * var(--u)); }
+.cards { display: flex; gap: calc(14 * var(--u)); align-items: stretch; }
+.c { flex: none; height: calc(326 * var(--u)); border-radius: calc(8 * var(--u)); padding: calc(20 * var(--u)); display: flex; flex-direction: column; transition: transform .35s cubic-bezier(.3,.7,.2,1); }
+.c:hover { transform: translateY(calc(-6 * var(--u))); }
+.c--light { width: calc(293 * var(--u)); background: #d6d6d6; color: var(--ink); }
+.c--dark { width: calc(298 * var(--u)); background: #262626; }
+.c--img { width: calc(200 * var(--u)); padding: 0; overflow: hidden; background: #050505; }
+.c--img img { width: 100%; height: 100%; object-fit: cover; object-position: 14% 50%; }
+.c .big { font-size: calc(43 * var(--u)); }
+.c-label { margin-top: calc(4 * var(--u)); font-size: calc(14 * var(--u)); }
+.c--light .c-label { color: #333; }
+.timeline { list-style: none; display: grid; gap: calc(10 * var(--u)); margin-bottom: calc(22 * var(--u)); }
+.timeline li { display: flex; justify-content: space-between; gap: calc(10 * var(--u)); padding-bottom: calc(10 * var(--u)); border-bottom: 1px solid rgba(17,17,17,.14); font-size: calc(13 * var(--u)); opacity: 0; transform: scale(.9); transform-origin: left; }
+.timeline li span:last-child { color: #555; }
+.panel.in .timeline li { animation: pop .5s cubic-bezier(.3,1.4,.4,1) forwards; animation-delay: calc(var(--i) * 110ms); }
+@keyframes pop { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: none; } }
+.c-bottom { margin-top: auto; }
+.badge { display: block; width: calc(150 * var(--u)); height: calc(110 * var(--u)); margin: calc(14 * var(--u)) auto calc(8 * var(--u)); color: #e6e6e6; }
+.c--dark .note { font-size: calc(12.5 * var(--u)); line-height: 1.45; color: #9a9a9a; }
 
-/* Qué trae */
-.features { margin-top: 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-.feature { background: var(--bg); padding: 30px 26px 32px; display: grid; gap: 12px; align-content: start; min-width: 0; }
-.feature svg { width: 26px; height: 26px; color: var(--sodium); }
-.feature h3 { font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
-.feature p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+/* ---------- Preventa ---------- */
+.buy { padding: calc(30 * var(--u)) calc(24 * var(--u)) calc(140 * var(--u)); }
+.buy-in { width: min(100%, calc(1302 * var(--u))); margin: 0 auto; }
+.buy-head { display: flex; justify-content: space-between; align-items: end; gap: calc(30 * var(--u)); flex-wrap: wrap; padding-bottom: calc(34 * var(--u)); border-bottom: 1px solid var(--line2); }
+.buy-head h2 { font-family: var(--wide); font-stretch: 104%; font-weight: 640; font-size: calc(90 * var(--u)); line-height: .86; letter-spacing: -.06em; text-transform: uppercase; }
+.buy-head p { max-width: calc(420 * var(--u)); font-size: calc(15 * var(--u)); line-height: 1.5; color: #a8a8a8; }
+.buy-head p b { color: #fff; font-weight: 600; }
+.offers { display: grid; grid-template-columns: calc(380 * var(--u)) 1fr 1fr; gap: calc(14 * var(--u)); margin-top: calc(34 * var(--u)); }
+.cover { border-radius: calc(8 * var(--u)); overflow: hidden; background: #050505; box-shadow: 0 30px 60px rgba(0,0,0,.6); }
+.cover img { width: 100%; height: 100%; object-fit: cover; }
+.offer { border-radius: calc(10 * var(--u)); padding: calc(28 * var(--u)); display: flex; flex-direction: column; border: 1px solid var(--line2); }
+.offer--main { background: #d6d6d6; color: var(--ink); border-color: transparent; }
+.offer .tag { font-size: calc(13 * var(--u)); display: flex; justify-content: space-between; }
+.offer .tag span:last-child { opacity: .6; }
+.offer .big { font-size: calc(64 * var(--u)); margin-top: calc(26 * var(--u)); }
+.offer .was { margin-top: calc(6 * var(--u)); font-size: calc(14 * var(--u)); opacity: .65; }
+.offer ul { list-style: none; margin: calc(26 * var(--u)) 0; display: grid; gap: calc(10 * var(--u)); font-size: calc(14.5 * var(--u)); line-height: 1.4; }
+.offer li { padding-bottom: calc(10 * var(--u)); border-bottom: 1px solid currentColor; border-color: rgba(127,127,127,.3); display: flex; gap: calc(10 * var(--u)); }
+.offer li::before { content: "✓"; }
+.offer .acts { margin-top: auto; display: grid; gap: calc(8 * var(--u)); }
+.offer .btn { width: 100%; height: calc(50 * var(--u)); font-size: calc(15 * var(--u)); }
+.offer--main .btn--line { color: var(--ink); box-shadow: inset 0 0 0 1px rgba(17,17,17,.3); }
+.offer .fine { margin-top: calc(14 * var(--u)); font-size: calc(12.5 * var(--u)); line-height: 1.45; opacity: .7; }
+.offer .fine a { text-decoration: underline; text-underline-offset: 2px; }
 
-/* Autor */
-.author { display: block; }
-.timeline { margin-top: 32px; display: grid; gap: 0; max-width: 560px; border-top: 1px solid var(--line); }
-.timeline li { list-style: none; display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
-.timeline .t { color: var(--muted); font-variant-numeric: tabular-nums; }
-
-/* Compra */
-.buy { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 64px; align-items: center; }
-.cover { position: relative; max-width: 100%; border-radius: 3px 8px 8px 3px; overflow: hidden; background: #050505;
-  box-shadow: -14px 0 0 -10px #1a1a1a, 0 30px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.06); }
-.cover img { display: block; width: 100%; height: auto; aspect-ratio: 720 / 1020; }
-.cover::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 18px; pointer-events: none;
-  background: linear-gradient(90deg, rgba(0,0,0,.55), rgba(255,255,255,.08) 55%, transparent); }
-
-.price-row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
-.price { font-size: 46px; font-weight: 600; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
-.price-note { color: var(--muted); font-size: 14px; }
-.specs { margin-top: 26px; display: grid; gap: 0; border-top: 1px solid var(--line); max-width: 520px; }
-.specs div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
-.specs dt { color: var(--muted); }
-.specs dd { text-align: right; }
-.buy-actions { margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap; }
-.pay-note { margin-top: 14px; color: var(--muted); font-size: 13px; }
-
-/* Selector papel / digital */
-.format-picker { margin-top: 28px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; max-width: 520px; }
-.format-opt { position: relative; cursor: pointer; }
-.format-opt input { position: absolute; opacity: 0; pointer-events: none; }
-.format-card {
-  display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 12px; row-gap: 2px; align-items: center;
-  padding: 16px 16px; border-radius: 8px; border: 1px solid rgba(198,198,198,.3);
-  background: linear-gradient(105deg, #050505 0%, #161616 60%, #222 100%);
-  transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
-}
-.format-card svg { grid-row: span 2; width: 24px; height: 24px; color: var(--muted); transition: color .25s ease; }
-.format-name { font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
-.format-price { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.format-opt:hover .format-card { border-color: rgba(235,235,235,.6); }
-.format-opt input:checked + .format-card {
-  border-color: var(--sodium); box-shadow: 0 0 0 1px var(--sodium), 0 0 24px rgba(214,160,90,.18);
-  background: linear-gradient(105deg, #0b0806 0%, #1d160e 60%, #2a1f12 100%);
-}
-.format-opt input:checked + .format-card svg { color: var(--sodium); }
-.format-opt input:focus-visible + .format-card { outline: 2px solid #fff; outline-offset: 3px; }
-.format-panel .price-row { margin-top: 22px; }
-.soon { margin-top: 20px; max-width: 520px; padding: 14px 16px; border: 1px dashed rgba(214,160,90,.55); border-radius: 8px; color: #e6d3b8; font-size: 15px; line-height: 1.55; }
-.abroad { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 14px; color: var(--muted); max-width: 520px; }
-.abroad a { color: #fff; font-weight: 500; border-bottom: 1px solid var(--sodium); padding-bottom: 1px; }
-.abroad a:hover { color: var(--sodium); }
-
-/* Preguntas */
-.faq { margin-top: 40px; max-width: 760px; border-top: 1px solid var(--line); }
-.faq details { border-bottom: 1px solid var(--line); }
-.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; padding: 20px 0; font-size: 17px; font-weight: 500; letter-spacing: -.01em; }
+.faq { margin-top: calc(90 * var(--u)); display: grid; grid-template-columns: calc(380 * var(--u)) 1fr; gap: calc(14 * var(--u)); }
+.faq h3 { font-size: calc(32 * var(--u)); font-weight: 500; letter-spacing: -.04em; line-height: 1.05; }
+.faq details { border-top: 1px solid var(--line2); }
+.faq details:last-child { border-bottom: 1px solid var(--line2); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; padding: calc(20 * var(--u)) 0; font-size: calc(18 * var(--u)); letter-spacing: -.015em; }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; color: var(--muted); font-weight: 300; font-size: 22px; line-height: 1; transition: transform .25s ease; }
+.faq summary::after { content: "+"; color: var(--grey); transition: transform .25s ease; }
 .faq details[open] summary::after { transform: rotate(45deg); }
-.faq details p { padding: 0 0 22px; color: #bdbdbd; font-size: 15.5px; line-height: 1.65; max-width: 640px; }
+.faq details p { padding-bottom: calc(22 * var(--u)); font-size: calc(15 * var(--u)); line-height: 1.6; color: #a8a8a8; max-width: calc(640 * var(--u)); }
 
-/* Cierre */
-.closing { position: relative; isolation: isolate; overflow: hidden; text-align: center; padding-block: 160px 128px; border-top: 1px solid var(--line); }
-/* Dibujo del autor: reja y portón del penal */
-.closing::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("reja.webp") center / cover no-repeat; opacity: .42; }
-.closing::after { content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, #000 0%, rgba(0,0,0,.35) 30%, rgba(0,0,0,.35) 70%, #000 100%), radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,.6), transparent 80%); }
-.closing .h2 { margin: 0 auto; }
-.closing .hero-actions { margin-top: 30px; }
-.site-footer { border-top: 1px solid var(--line); padding-block: 28px max(28px, env(safe-area-inset-bottom, 0px)); color: var(--muted); font-size: 13px; }
-.site-footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.foot { border-top: 1px solid var(--line); padding: calc(28 * var(--u)) calc(57 * var(--u)) max(calc(28 * var(--u)), env(safe-area-inset-bottom, 0px)); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: calc(13 * var(--u)); color: var(--grey); }
+.social { display: flex; gap: 10px; flex-wrap: wrap; }
+.social a { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 8px 14px 8px 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line2); color: #d8d8d8; transition: box-shadow .2s ease, color .2s ease; font-size: 13px; }
+.social a:hover { color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.7); }
+.social svg { width: 20px; height: 20px; flex: none; }
 
-.site-footer .wrap { align-items: center; }
-.footer-links { display: flex; flex-wrap: wrap; gap: 10px; }
-.footer-links a { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 8px 14px 8px 10px; border: 1px solid var(--line); border-radius: 999px; color: #d8d8d8; transition: border-color .2s ease, color .2s ease, background-color .2s ease; }
-.footer-links a:hover, .footer-links a:focus-visible { color: #fff; border-color: var(--sodium); background: rgba(214,160,90,.08); }
-.footer-links svg { width: 20px; height: 20px; flex: none; color: var(--sodium); }
-@media (max-width: 560px) { .footer-links { width: 100%; } .footer-links a { flex: 1 1 100%; } }
+/* ---------- Entrada ---------- */
+.rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(.35s + var(--k, 0) * 55ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+.title .mask > span { animation: up 1s cubic-bezier(.2,.7,.1,1) both; animation-delay: calc(.15s + var(--k, 0) * 110ms); }
+@keyframes up { from { transform: translateY(105%); } }
+.photo { animation: photo 1.3s cubic-bezier(.2,.7,.2,1) both .1s; }
+@keyframes photo { from { opacity: 0; transform: translateY(40px); filter: blur(12px); } }
+.nav { animation: drop .8s cubic-bezier(.2,.7,.2,1) both .2s; }
+@keyframes drop { from { opacity: 0; transform: translateY(-14px); } }
+.progress i { animation: draw 1.6s cubic-bezier(.3,.7,.2,1) both 1s; }
+@keyframes draw { from { transform: scaleX(0); } }
 
-/* ---------- Animación de entrada ---------- */
-.appear { opacity: 1; animation-duration: 1.05s; animation-fill-mode: both; animation-timing-function: cubic-bezier(.16,1,.3,1); animation-delay: var(--d, .08s); }
-.appear--scale { animation-name: in-scale; } .appear--soft { animation-name: in-soft; } .appear--mask { animation-name: in-mask; }
-.appear--pop { animation-name: in-pop; } .appear--btn { animation-name: in-btn; } .appear--side { animation-name: in-side; } .appear--stat { animation-name: in-stat; }
-.appear.is-in, .hero-photo.is-in { animation: none; opacity: 1; transform: none; clip-path: none; filter: none; }
-@keyframes in-scale { from { opacity: 0; transform: scale(.84); } to { opacity: 1; transform: none; } }
-@keyframes in-soft  { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-@keyframes in-mask  { from { opacity: 0; transform: translateY(40%); } to { opacity: 1; transform: none; } }
-@keyframes in-pop   { 0% { opacity: 0; transform: scale(.9); } 70% { opacity: 1; transform: scale(1.03); } 100% { opacity: 1; transform: none; } }
-@keyframes in-btn   { from { opacity: 0; transform: translateY(18px) scale(.94); } to { opacity: 1; transform: none; } }
-@keyframes in-side  { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: none; } }
-@keyframes in-stat  { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
-@keyframes in-star  { 0% { opacity: 0; transform: scale(.2) rotate(-50deg); } 65% { opacity: 1; transform: scale(1.2) rotate(8deg); } 100% { opacity: 1; transform: none; } }
-@keyframes in-em    { from { opacity: .35; filter: blur(4px); } to { opacity: 1; filter: none; } }
-@keyframes in-light { from { opacity: 0; } to { opacity: 1; } }
+/* ---------- Celular ---------- */
+@media (max-width: 760px) {
+  :root { --u: calc(100vw / 390); }
+  .hero { height: auto; display: flex; flex-direction: column; padding: calc(16 * var(--u)) calc(16 * var(--u)) calc(28 * var(--u)); gap: calc(18 * var(--u)); }
+  .hero > * { position: relative; left: auto; right: auto; top: auto; }
+  .nav { order: 1; align-self: flex-start; height: calc(42 * var(--u)); }
+  .nav a { padding: 0 calc(11 * var(--u)); font-size: calc(13 * var(--u)); }
+  .hero .cta { position: absolute; order: 0; top: calc(16 * var(--u)); right: calc(16 * var(--u)); left: auto; width: calc(42 * var(--u)); height: calc(42 * var(--u)); padding: 0; }
+  .cta-t { display: none; }
+  .hero .cta .arrow { font-size: calc(17 * var(--u)); }
+  .title-sub { font-size: calc(30 * var(--u)); }
+  .c--img { display: none; }
+  .date { order: 2; font-size: calc(12 * var(--u)); }
+  .title { order: 3; margin-top: calc(10 * var(--u)); }
+  .title h1 { font-size: calc(58 * var(--u)); white-space: nowrap; }
+  .title .yr { left: auto; right: 0; top: calc(-14 * var(--u)); }
+  .about { order: 4; width: auto; top: auto; }
+  .photo { order: 5; width: calc(100% + 32 * var(--u)); margin: 0 calc(-16 * var(--u)); height: calc(470 * var(--u)); }
+  .plate { left: 50%; top: auto; bottom: calc(66 * var(--u)); transform: translateX(-50%); width: calc(320 * var(--u)); height: calc(64 * var(--u)); }
+  .plate-name { font-size: calc(21 * var(--u)); }
+  .places { top: auto; bottom: calc(20 * var(--u)); gap: calc(24 * var(--u)); font-size: calc(14 * var(--u)); }
+  .pill { order: 6; align-self: flex-start; }
+  .stats { order: 7; width: 100%; height: calc(220 * var(--u)); }
+  .avail { order: 8; text-align: left; font-size: calc(24 * var(--u)); }
+  .out { order: 9; width: 100%; }
+  .out-card { height: calc(220 * var(--u)); }
+  .bar { padding: 0 calc(16 * var(--u)); height: calc(70 * var(--u)); font-size: calc(10.5 * var(--u)); gap: calc(8 * var(--u)); }
+  .bar .mid i { width: calc(26 * var(--u)); height: calc(26 * var(--u)); }
+  .statement { padding: calc(90 * var(--u)) calc(20 * var(--u)) calc(100 * var(--u)); }
+  .statement-text { font-size: calc(28 * var(--u)); }
+  .sub { margin-top: calc(60 * var(--u)); font-size: calc(17 * var(--u)); }
+  .excerpt { margin-top: calc(60 * var(--u)); grid-template-columns: 1fr; gap: calc(14 * var(--u)); }
+  .excerpt blockquote { font-size: calc(17 * var(--u)); }
+  .trust { padding: 0 calc(16 * var(--u)) calc(90 * var(--u)); }
+  .panel { grid-template-columns: 1fr; padding: calc(28 * var(--u)) calc(20 * var(--u)); gap: calc(26 * var(--u)); }
+  .panel-head h2 { font-size: calc(40 * var(--u)); }
+  .panel-head p { font-size: calc(14.5 * var(--u)); max-width: none; }
+  .tile--a { left: auto; right: 0; top: calc(-6 * var(--u)); width: calc(64 * var(--u)); height: calc(64 * var(--u)); }
+  .tile--b { display: none; }
+  .cards { flex-direction: column; }
+  .c, .c--light, .c--dark { width: 100%; height: auto; min-height: calc(300 * var(--u)); }
+  .c--img { height: calc(360 * var(--u)); }
+  .buy { padding: calc(10 * var(--u)) calc(16 * var(--u)) calc(90 * var(--u)); }
+  .buy-head h2 { font-size: calc(58 * var(--u)); }
+  .buy-head p { font-size: calc(15 * var(--u)); max-width: none; }
+  .offers { grid-template-columns: 1fr; }
+  .cover { max-width: calc(240 * var(--u)); margin: 0 auto calc(10 * var(--u)); }
+  .offer { padding: calc(22 * var(--u)); }
+  .offer .big { font-size: calc(52 * var(--u)); }
+  .offer ul, .offer .fine { font-size: calc(14.5 * var(--u)); }
+  .offer .btn { height: calc(52 * var(--u)); font-size: calc(15.5 * var(--u)); }
+  .faq { grid-template-columns: 1fr; margin-top: calc(60 * var(--u)); }
+  .faq h3 { font-size: calc(28 * var(--u)); }
+  .faq summary { font-size: calc(16.5 * var(--u)); }
+  .faq details p { font-size: calc(15 * var(--u)); }
+  .foot { padding: calc(24 * var(--u)) calc(16 * var(--u)); font-size: calc(13 * var(--u)); }
+  .social { width: 100%; }
+  .social a { flex: 1 1 100%; }
+  .btn { height: calc(48 * var(--u)); font-size: calc(14.5 * var(--u)); }
+  .about p { font-size: calc(15 * var(--u)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
-  .appear, .hero-photo, .hero h1 em, .badge-star { opacity: 1; transform: none; filter: none; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .timeline li { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
-}
-
-/* ---------- Responsive ---------- */
-@media (min-width: 1600px) { :root { --h1: 64px; --lede: 18px; --nav: 15px; --nav-h: 44px; --btn: 15px; --btn-h: 44px; --hero-btn-h: 50px; --gutter: 64px; } }
-@media (max-width: 1279px) { :root { --h1: 44px; --nav: 13px; --nav-h: 36px; --gutter: 28px; } #site-nav a { padding: 0 14px; } .stats { padding-left: max(36px, env(safe-area-inset-left,0px)); padding-right: max(36px, env(safe-area-inset-right,0px)); } }
-
-@media (max-width: 900px) {
-  :root { --h1: 36px; --lede: 16.5px; --btn: 15px; --btn-h: 44px; --hero-btn-h: 50px; --gutter: 20px; --hero-gap: 36px; --h2: 32px; --body: 16.5px; }
-  .header { grid-template-columns: 1fr auto; gap: 8px; padding-top: 16px; }
-  .logo, .header-right { position: relative; z-index: 80; }
-  .burger { display: grid; }
-  .menu-backdrop { display: block; position: fixed; inset: 0; z-index: 40; background: rgba(8,8,8,.42); opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility .28s ease; }
-  body.menu-open .menu-backdrop { opacity: 1; visibility: visible; -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
-  #site-nav { position: fixed; inset: 0; z-index: 45; flex-direction: column; justify-content: center; gap: 12px;
-    padding-top: max(96px, calc(env(safe-area-inset-top, 0px) + 88px)); padding-bottom: 32px;
-    padding-left: max(22px, env(safe-area-inset-left, 0px)); padding-right: max(22px, env(safe-area-inset-right, 0px));
-    opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility .28s ease; }
-  body.menu-open #site-nav { opacity: 1; visibility: visible; }
-  #site-nav a { width: 100%; max-width: 420px; height: 56px; font-size: 19px; border-radius: 10px; justify-content: center; }
-  body.menu-open { overflow: hidden; }
-  .hero { padding-bottom: 48px; }
-  .hero-photo::before { background-position: 22% top; background-size: auto 78%; opacity: .7; }
-  .stats { flex-direction: column; gap: 14px; padding-left: max(20px, env(safe-area-inset-left,0px)); padding-right: max(20px, env(safe-area-inset-right,0px)); }
-  .stat { white-space: normal; }
-  .section { padding-block: 72px; }
-  .features { grid-template-columns: minmax(0, 1fr); }
-  .buy { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-  .cover { max-width: 280px; margin: 0 auto; width: 100%; }
-  .timeline li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
-}
-@media (max-width: 560px) {
-  :root { --h1: 33px; --gutter: 16px; }
-  .header-cta { display: none; }
-  .hero-actions, .buy-actions { flex-direction: column; width: 100%; }
-  .hero-actions .btn, .buy-actions .btn { width: 100%; }
-  .price { font-size: 40px; }
 }
 </style>
 </head>
-<body style="background:#000;color:#fff">
+<body>
 
+<!-- HERO -->
+<header class="hero" id="inicio">
+  <div class="photo">
+    <img class="photo-img" src="/celda-tinta.webp" width="764" height="981" alt="Dibujo en birome de una celda vista desde la cucheta, con un mazo de cartas, un encendedor y un paquete de cigarrillos" fetchpriority="high">
+    <div class="plate rise" style="--k:8"><span class="seal">LT</span><span class="plate-name">RANCHADA</span><span class="burger" aria-hidden="true"><i></i><i></i></span></div>
+    <div class="places rise" style="--k:9" aria-label="Lugares de la novela"><span>Trelew</span><span>Coronda</span><span>Piñero</span></div>
+  </div>
 
-<div class="grain" aria-hidden="true"></div>
+  <nav class="nav" aria-label="Secciones">
+    <span class="nav-pill" aria-hidden="true"></span>
+    <a href="#inicio" class="on">Inicio</a>
+    <a href="#historia">Historia</a>
+    <a href="#autor">Autor</a>
+    <a href="#preventa">Preventa</a>
+  </nav>
 
-<div class="top" id="top">
-  <div class="hero-photo" aria-hidden="true"></div>
-  <div class="menu-backdrop" aria-hidden="true"></div>
+  <p class="date rise" style="--k:1"><b>Preventa abierta</b><br><span>Entregas 15.12.2026</span></p>
+  <a class="btn cta rise" style="--k:2" href="#preventa" aria-label="Reservar el libro"><span class="cta-t">Reservar</span> <span class="arrow">↗</span></a>
 
-  <header class="header">
-    <a class="logo appear appear--scale" style="--d:.08s" href="#top" aria-label="Ranchada, novela">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="2.5" width="18" height="19" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="7" y="5" width="1.8" height="14" rx=".9"/><rect x="11.1" y="5" width="1.8" height="14" rx=".9"/><rect x="15.2" y="5" width="1.8" height="14" rx=".9"/></svg>
-      <span>Ranchada<span class="logo-suffix"> · novela</span></span>
-    </a>
-    <nav id="site-nav" aria-label="Principal">
-      <a class="appear appear--scale" style="--d:.16s" href="#historia">La historia</a>
-      <a class="appear appear--soft"  style="--d:.28s" href="#que-trae">Qué trae</a>
-      <a class="appear appear--scale" style="--d:.40s" href="#autor">El autor</a>
-      <a class="appear appear--soft"  style="--d:.52s" href="#comprar" data-venta-text="Preventa">Ediciones</a>
-    </nav>
-    <div class="header-right">
-      <a class="btn btn-solid header-cta appear appear--scale" style="--d:.34s" href="https://wa.me/5493412609941?text=Hola%21%20Avisame%20cuando%20salga%20Ranchada." target="_blank" rel="noopener" data-venta-href="#comprar" data-venta-text="Reservá en preventa">Avisame cuando salga</a>
-      <button class="burger appear appear--scale" style="--d:.34s" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  <div class="title">
+    <h1><span class="mask"><span style="--k:0">Ranchada</span></span></h1>
+    <p class="title-sub"><span class="mask"><span style="--k:1">Mantenelo vivo</span></span></p>
+    <span class="yr rise" style="--k:3">(’26)</span>
+  </div>
+
+  <div class="about">
+    <p class="kicker rise" style="--k:3">(LA NOVELA)</p>
+    <p class="rise" style="--k:4">Un ex-policía vuelve a entrar a Coronda para mantener vivo al hombre que todos quieren muerto. Los capítulos se armaron adentro de la cárcel, con la ayuda de otros internos.</p>
+    <a class="btn rise" style="--k:5" href="#historia">Leé el comienzo <span class="arrow">↗</span></a>
+  </div>
+
+  <div class="stats rise" style="--k:6">
+    <div class="card-d">
+      <span class="big">$<span data-count="18000" data-fmt="miles">18.000</span></span>
+      <small>Papel, firmado y dedicado</small>
+      <div class="ticks"><span>Capítulo 1 al reservar</span><span>Envío a todo el país</span></div>
+      <a class="bar-btn" href="#preventa">Reservar <span>↗</span></a>
     </div>
-  </header>
-
-  <main class="hero">
-    <div class="hero-copy">
-      <span class="badge appear appear--pop" style="--d:.22s">
-        <svg class="badge-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6C12.55 2.6 12.88 3.15 13.08 4.7c.62 4.7 1.52 5.6 6.22 6.22 1.55.2 2.1.53 2.1 1.08s-.55.88-2.1 1.08c-4.7.62-5.6 1.52-6.22 6.22-.2 1.55-.53 2.1-1.08 2.1s-.88-.55-1.08-2.1c-.62-4.7-1.52-5.6-6.22-6.22C3.15 12.88 2.6 12.55 2.6 12s.55-.88 2.1-1.08c4.7-.62 5.6-1.52 6.22-6.22C11.12 3.15 11.45 2.6 12 2.6Z"/></svg>
-        <span data-venta-text="Novela · Preventa abierta">Novela · Próximamente en papel y digital</span>
-      </span>
-      <h1>
-        <span class="headline-line"><span class="appear appear--mask" style="--d:.42s;display:inline-block">Fui policía. Estuve preso.</span></span>
-        <span class="headline-line"><span class="appear appear--mask" style="--d:.62s;display:inline-block"><em>Volví a entrar</em> por un amigo.</span></span>
-      </h1>
-      <p class="lede appear appear--soft" style="--d:.82s;animation-duration:1.25s">Una novela de cárcel escrita por alguien que estuvo adentro. Los capítulos se fueron armando ahí, con la ayuda de otros internos. La trama es ficción. Trelew, Coronda y Piñero son reales, y el autor pasó por los tres.</p>
-      <div class="hero-actions">
-        <a class="btn btn-solid btn-lg appear appear--btn" style="--d:.96s" href="https://wa.me/5493412609941?text=Hola%21%20Avisame%20cuando%20salga%20Ranchada." target="_blank" rel="noopener" data-venta-href="#comprar" data-venta-text="Reservá en preventa">Avisame cuando salga</a>
-        <a class="btn btn-ghost btn-lg appear appear--side" style="--d:1.10s" href="#comienzo">Leer cómo empieza</a>
-      </div>
-    </div>
-  </main>
-
-  <footer class="stats">
-    <span class="stat appear appear--stat" style="--d:1.12s">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="2.5" width="18" height="19" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="7.2" y="5.5" width="1.7" height="13" rx=".85"/><rect x="11.15" y="5.5" width="1.7" height="13" rx=".85"/><rect x="15.1" y="5.5" width="1.7" height="13" rx=".85"/></svg>
-      <span><b>4 años y 8 meses</b> en la Alcaidía de Trelew</span>
-    </span>
-    <span class="stat appear appear--stat" style="--d:1.28s">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.4" y="2.4" width="19.2" height="19.2" rx="6.2" fill="#fff"/><path d="M12 6.6c-2.3 0-4 1.75-4 3.9 0 2.9 4 7 4 7s4-4.1 4-7c0-2.15-1.7-3.9-4-3.9Z" fill="none" stroke="#111" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10.5" r="1.35" fill="#111"/></svg>
-      <span><b>16 meses</b> entre Coronda y Piñero</span>
-    </span>
-    <span class="stat appear appear--stat" style="--d:1.44s">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><path d="M14 14h3v3M17.5 21H21v-3.5"/></svg>
-      <span>Dibujos en lapicera y <b>QR con mapas y música</b></span>
-    </span>
-  </footer>
-</div>
-
-<!-- LA HISTORIA -->
-<section class="section" id="historia">
-  <div class="wrap">
-    <span class="eyebrow">La historia</span>
-    <h2 class="h2">Un WhatsApp, una perpetua y <em>una sola salida.</em></h2>
-    <div class="prose">
-      <p>Todo arranca con un mensaje. A <strong>Fernando</strong>, el amigo que el narrador conoció en la Alcaidía de Trelew, le acaban de confirmar la perpetua por un homicidio que no cometió.</p>
-      <p>El narrador ya está en España, lejos de todo. Pero sabe dos cosas: que el verdadero asesino está preso en Coronda, y que solo una confesión puede sacar a Fernando.</p>
-      <p>Así que vuelve. Y para llegar hasta ese hombre hace lo único que funciona: <strong>se hace detener a propósito.</strong> Como ex-policía, termina en el pabellón policial. Adentro estalla un motín, y su misión cambia: mantener vivo al tipo que todos quieren muerto.</p>
-    </div>
-
-    <div class="define">
-      <div class="define-word">ranchada <small>sustantivo · jerga carcelaria</small></div>
-      <p>El grupo con el que compartís la comida, te cuidás y te jugás adentro. Por tu ranchada, entrás.</p>
-    </div>
-
-    <div class="excerpt" id="comienzo">
-      <div class="excerpt-meta"><span>Capítulo 1</span><span>Primeras líneas</span></div>
-      <blockquote>Eran las 17:30. Estaba sentado en la cafetería de mi amigo el Tano, en el casco antiguo de Valencia. En mi mesa tenía mi café con leche y un panini de tomate, oliva y sal.<br><br>Llega una notificación:<br><br>«Me confirmaron la sentencia. Perpetua».<br><br>Era un WhatsApp de Fer.</blockquote>
-      <p class="note">Si reservás en preventa, te mando el capítulo 1 completo en PDF apenas pagás.</p>
+    <div class="card-p">
+      <img src="/reja.webp" alt="" aria-hidden="true">
+      <div class="top"><span>Dibujado adentro</span><span>birome</span></div>
+      <div class="bot"><span class="big"><span data-count="3">3</span></span><small>cárceles reales,<br>con QR a cada lugar</small></div>
     </div>
   </div>
-</section>
 
-<!-- QUÉ TRAE -->
-<section class="section" id="que-trae">
-  <div class="wrap">
-    <span class="eyebrow">Qué trae el libro</span>
-    <h2 class="h2">No se lee solamente. <em>Se ubica y se escucha.</em></h2>
-    <div class="features">
-      <div class="feature">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4Z"/><path d="M14 7l3 3"/></svg>
-        <h3>Dibujos en lapicera</h3>
-        <p>Ilustraciones hechas a mano por el autor: pasillos, celdas y caras que vio de cerca.</p>
-      </div>
-      <div class="feature">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11Z"/><circle cx="12" cy="10" r="2.2"/></svg>
-        <h3>QR con mapas</h3>
-        <p>Escaneás y Google Maps te muestra dónde pasó cada escena. Los lugares existen.</p>
-      </div>
-      <div class="feature">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>
-        <h3>QR con música</h3>
-        <p>La música que sonaba en ese momento. Le das play y leés con la misma banda de fondo.</p>
-      </div>
+  <p class="pill rise" style="--k:4">Preventa abierta <i aria-hidden="true">✓</i></p>
+  <p class="avail rise" style="--k:5">Firmado<br><span class="dot" aria-hidden="true"></span>y dedicado</p>
+
+  <div class="out rise" style="--k:7">
+    <div class="out-head"><div><span>Gratis al reservar</span><b>Capítulo 1</b></div><span>[PDF]</span></div>
+    <a class="out-card" href="#preventa" aria-label="Reservar y recibir el capítulo 1">
+      <img src="/tapa.webp" alt="" aria-hidden="true">
+      <span class="round" aria-hidden="true">↗</span>
+    </a>
+    <div class="progress" aria-hidden="true"><i></i></div>
+    <p class="progress-note"><span>Libro en proceso</span><span>Sale 15.12</span></p>
+  </div>
+</header>
+
+<div class="bar w" aria-hidden="true">
+  <span>Novela <span class="g">2026</span></span>
+  <span class="mid">Seguí bajando <i>↓</i></span>
+  <span class="r g">Basada en lo vivido</span>
+</div>
+
+<!-- MANIFIESTO -->
+<section class="statement" id="historia">
+  <p class="statement-text" data-fill>Un WhatsApp. Una perpetua confirmada. Fer va a pasar el resto de su vida preso por un crimen que no cometió. El verdadero asesino está en Coronda, y hay una sola forma de llegar a él: volver a entrar.</p>
+  <p class="sub">Una novela armada adentro de la cárcel, con la ayuda de otros internos.<br><em>La trama es ficción. Los lugares, no.</em></p>
+
+  <div class="excerpt">
+    <p class="kicker">(EL COMIENZO)</p>
+    <div>
+      <blockquote>Eran las 17:30. Estaba sentado en la cafetería de mi amigo el Tano, en el casco antiguo de Valencia. En mi mesa tenía mi café con leche y un panini de tomate, oliva y sal.<br><br>Llega una notificación:<br><br><b>«Me confirmaron la sentencia. Perpetua».</b><br><br>Era un WhatsApp de Fer.</blockquote>
+      <p>Si reservás, te mando el capítulo 1 completo en PDF apenas pagás.</p>
     </div>
   </div>
 </section>
 
 <!-- AUTOR -->
-<section class="section" id="autor">
-  <div class="wrap author">
-    <div>
-      <span class="eyebrow">El autor · LT</span>
-      <h2 class="h2">Estuve en los dos lados <em>de la reja.</em></h2>
-      <div class="prose">
-        <p>Tengo 35 años. Fui policía de Infantería y terminé preso. Adentro conocí a gente que no sale en las noticias y aprendí códigos que no se enseñan en ningún lado.</p>
-        <p>Este libro es una novela, pero cada olor, cada pasillo y cada silencio los viví. Los capítulos los fui armando adentro, con la ayuda de otros internos.</p>
+<section class="trust" id="autor">
+  <div class="panel" data-panel>
+    <div class="panel-head">
+      <h2>Estuve en<br>los dos lados<br>de la reja.</h2>
+      <p>Fui policía de Infantería y terminé preso. Adentro conocí gente que no sale en las noticias y aprendí códigos que no se enseñan en ningún lado. Esta novela es ficción, pero cada pasillo lo caminé.</p>
+      <span class="tile tile--a" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg></span>
+      <span class="tile tile--b" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#fff"><circle cx="7" cy="7" r="2.4"/><circle cx="17" cy="7" r="2.4"/><circle cx="7" cy="17" r="2.4"/><circle cx="17" cy="17" r="2.4"/></svg></span>
+    </div>
+    <div class="cards">
+      <div class="c c--light">
+        <ul class="timeline">
+          <li style="--i:0"><span>Policía</span><span>Infantería</span></li>
+          <li style="--i:1"><span>Alcaidía de Trelew</span><span>4 años 8 meses</span></li>
+          <li style="--i:2"><span>Coronda</span><span>8 meses</span></li>
+          <li style="--i:3"><span>Piñero</span><span>8 meses</span></li>
+          <li style="--i:4"><span>Hoy</span><span>Libre, y escribiendo</span></li>
+        </ul>
+        <div class="c-bottom"><span class="big"><span data-count="6">6</span>+</span><p class="c-label">años adentro</p></div>
       </div>
-      <ul class="timeline">
-        <li><span class="t">Policía</span><span>Sección Infantería</span></li>
-        <li><span class="t">4 años y 8 meses</span><span>Alcaidía de Trelew, Chubut</span></li>
-        <li><span class="t">3 años</span><span>España</span></li>
-        <li><span class="t">8 meses</span><span>Coronda, Santa Fe</span></li>
-        <li><span class="t">8 meses</span><span>Piñero, Santa Fe</span></li>
-        <li><span class="t">Hoy</span><span>Libre, y escribiendo</span></li>
-      </ul>
+      <div class="c c--dark">
+        <span class="big"><span data-count="150">150</span></span>
+        <p class="c-label">páginas, aprox.</p>
+        <svg class="badge" viewBox="0 0 150 110" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+          <g stroke-linecap="round"><path d="M40 92C22 80 14 58 20 32"/><path d="M110 92c18-12 26-34 20-60"/>
+          <path d="M22 44c-8-2-12-8-12-8s8-1 13 4M20 58c-8 0-13-5-13-5s8-3 14 1M24 71c-7 2-13-1-13-1s6-5 13-3M31 82c-6 4-12 3-12 3s4-6 11-6M128 44c8-2 12-8 12-8s-8-1-13 4M130 58c8 0 13-5 13-5s-8-3-14 1M126 71c7 2 13-1 13-1s-6-5-13-3M119 82c6 4 12 3 12 3s-4-6-11-6"/></g>
+          <text x="75" y="44" text-anchor="middle" fill="currentColor" stroke="none" font-family="Archivo, sans-serif" font-size="9" letter-spacing="1.5">PREVENTA</text>
+          <text x="75" y="62" text-anchor="middle" fill="currentColor" stroke="none" font-family="Archivo, sans-serif" font-size="15" font-weight="700">2026</text>
+          <text x="75" y="78" text-anchor="middle" fill="currentColor" stroke="none" font-family="Archivo, sans-serif" font-size="7.5" letter-spacing="1">FIRMADO · DEDICADO</text>
+        </svg>
+        <p class="note c-bottom">Con dibujos hechos adentro en birome y códigos QR a los lugares reales y a la música de cada escena.</p>
+      </div>
+      <div class="c c--img"><img src="/celda.webp" alt="Dibujo de la celda en líneas claras sobre negro" loading="lazy"></div>
     </div>
   </div>
 </section>
 
-<!-- COMPRAR -->
-<section class="section" id="comprar">
-  <div class="wrap buy">
-    <div class="cover"><img src="tapa.webp" width="720" height="1020" loading="lazy" alt="Tapa de Ranchada. Mantenelo vivo, de LT: dibujo en lapicera de una celda vista desde la cucheta"></div>
-    <div>
-      <span class="eyebrow">Elegí tu edición</span>
-      <h2 class="h2">En papel o <em>en tu celular.</em></h2>
+<!-- PREVENTA -->
+<section class="buy" id="preventa">
+  <div class="buy-in">
+    <div class="buy-head">
+      <h2>Preventa</h2>
+      <p>El libro se entrega a partir del <b>15 de diciembre</b>. Si lo reservás ahora: precio especial, te llega <b>firmado y dedicado</b> a tu nombre, y te mando el <b>capítulo 1 en PDF</b> apenas pagás.</p>
+    </div>
+    <div class="offers">
+      <div class="cover"><img src="/tapa.webp" width="720" height="1020" loading="lazy" alt="Tapa de Ranchada. Mantenelo vivo, de LT"></div>
 
-      <p class="soon solo-venta" hidden><b>Preventa abierta.</b> El libro se entrega a partir del 15 de diciembre. Si lo reservás ahora: precio especial, te llega <b>firmado y dedicado</b> a tu nombre, y te mando el <b>capítulo 1 en PDF</b> apenas pagás.</p>
-
-      <p class="soon solo-espera">Lo estoy terminando. Todavía no está a la venta: tocá "Avisame cuando salga" y te escribo por WhatsApp apenas esté listo, con el precio de lanzamiento.</p>
-
-      <div class="format-picker" role="radiogroup" aria-label="Formato del libro">
-        <label class="format-opt">
-          <input type="radio" name="formato" id="formato-papel" value="papel" checked>
-          <span class="format-card">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>
-            <span class="format-name">Papel</span>
-            <span class="format-price">$18.000</span>
-          </span>
-        </label>
-        <label class="format-opt">
-          <input type="radio" name="formato" id="formato-digital" value="digital">
-          <span class="format-card">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10.5 18.5h3"/></svg>
-            <span class="format-name">Digital</span>
-            <span class="format-price">$10.000 · USD 7</span>
-          </span>
-        </label>
+      <div class="offer offer--main">
+        <p class="tag"><span>Papel</span><span>Recomendado</span></p>
+        <span class="big">$18.000</span>
+        <p class="was"><s>$22.000</s> · precio de preventa, + envío</p>
+        <ul>
+          <li>Firmado y dedicado a tu nombre</li>
+          <li>Ilustraciones y códigos QR</li>
+          <li>Envío a todo el país (el costo te lo paso por WhatsApp)</li>
+          <li>Unas 150 páginas (estimado)</li>
+        </ul>
+        <div class="acts">
+          <a class="btn" href="https://mpago.la/2Mameh9" target="_blank" rel="noopener">Reservar en papel <span class="arrow">↗</span></a>
+          <a class="btn btn--line" href="https://wa.me/5493412609941?text=Hola%21%20Quiero%20el%20libro%20Ranchada%20en%20papel.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+        </div>
+        <p class="fine">Pagás con Mercado Pago. Después mandame por WhatsApp el comprobante, el nombre para la dedicatoria y la dirección de envío. Solo envíos dentro de Argentina.</p>
       </div>
 
-      <div class="format-panel" data-formato="papel">
-        <div class="price-row">
-          <span class="price">$18.000</span>
-          <span class="price-note"><s>$22.000</s> · precio de preventa, + envío</span>
+      <div class="offer">
+        <p class="tag"><span>Digital</span><span>PDF</span></p>
+        <span class="big">$10.000</span>
+        <p class="was">Desde el exterior: USD 7</p>
+        <ul>
+          <li>Se lee en el celular, la tablet o la compu</li>
+          <li>Mapas y música con links directos</li>
+          <li>Por email o WhatsApp</li>
+          <li>Capítulo 1 al pagar; el libro, desde el 15/12</li>
+        </ul>
+        <div class="acts">
+          <a class="btn btn--light" href="https://mpago.la/1EGMfdc" target="_blank" rel="noopener">Reservar digital <span class="arrow">↗</span></a>
+          <a class="btn btn--line" href="https://wa.me/5493412609941?text=Hola%21%20Quiero%20el%20libro%20Ranchada%20en%20digital.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener">Consultar por WhatsApp</a>
         </div>
-        <dl class="specs">
-          <div><dt>Formato</dt><dd>Libro impreso</dd></div>
-          <div><dt>Páginas</dt><dd>Unas 150 (estimado)</dd></div>
-          <div><dt>Incluye</dt><dd>Firmado y dedicado, ilustraciones y códigos QR</dd></div>
-          <div><dt>Envío</dt><dd>A todo el país. El costo te lo paso por WhatsApp</dd></div>
-          <div><dt>Entrega</dt><dd>A partir del 15 de diciembre</dd></div>
-        </dl>
-        <div class="buy-actions">
-          <a class="btn btn-solid btn-lg" href="https://wa.me/5493412609941?text=Hola%21%20Avisame%20cuando%20salga%20Ranchada%20en%20papel." target="_blank" rel="noopener" data-venta-href="https://mpago.la/2Mameh9" data-venta-text="Reservar en papel">Avisame cuando salga en papel</a>
-          <a class="btn btn-ghost btn-lg solo-venta" href="https://wa.me/5493412609941?text=Hola%21%20Quiero%20el%20libro%20Ranchada%20en%20papel.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener" hidden>Consultar por WhatsApp</a>
-        </div>
-        <p class="pay-note">Pagás con Mercado Pago (tarjeta, débito, transferencia o dinero en cuenta). Después mandame por WhatsApp el comprobante, el nombre para la dedicatoria y la dirección de envío, y te paso el capítulo 1. Solo envíos dentro de Argentina.</p>
-      </div>
-
-      <div class="format-panel" data-formato="digital" hidden>
-        <div class="price-row">
-          <span class="price">$10.000</span>
-          <span class="price-note">sin envío, desde cualquier país</span>
-        </div>
-        <dl class="specs">
-          <div><dt>Formato</dt><dd>PDF</dd></div>
-          <div><dt>Páginas</dt><dd>Unas 150 (estimado)</dd></div>
-          <div><dt>Incluye</dt><dd>Ilustraciones y links directos a mapas y música</dd></div>
-          <div><dt>Entrega</dt><dd>Por email o WhatsApp</dd></div>
-          <div><dt>Lo recibís</dt><dd>El capítulo 1 al pagar; el libro, desde el 15 de diciembre</dd></div>
-        </dl>
-        <div class="buy-actions">
-          <a class="btn btn-solid btn-lg" href="https://wa.me/5493412609941?text=Hola%21%20Avisame%20cuando%20salga%20Ranchada%20en%20digital." target="_blank" rel="noopener" data-venta-href="https://mpago.la/1EGMfdc" data-venta-text="Reservar digital">Avisame cuando salga en digital</a>
-          <a class="btn btn-ghost btn-lg solo-venta" href="https://wa.me/5493412609941?text=Hola%21%20Quiero%20el%20libro%20Ranchada%20en%20digital.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener" hidden>Consultar por WhatsApp</a>
-        </div>
-        <p class="pay-note">Se lee en el celular, la tablet o la computadora. Después de pagar, mandame el comprobante por WhatsApp y te paso el capítulo 1 al toque.</p>
-        <div class="abroad solo-venta" hidden>
-          <span>¿Estás fuera de Argentina?</span>
-          <a href="https://www.paypal.com/ncp/payment/JDMS7DYH9J32L" target="_blank" rel="noopener">Pagar USD 7 con PayPal</a>
-        </div>
+        <p class="fine">¿Desde España u otro país? <a href="https://www.paypal.com/ncp/payment/JDMS7DYH9J32L" target="_blank" rel="noopener">Pagar USD 7 con PayPal</a>. Después mandame el comprobante por WhatsApp.</p>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- PREGUNTAS -->
-<section class="section" id="preguntas">
-  <div class="wrap">
-    <span class="eyebrow">Preguntas</span>
-    <h2 class="h2">Lo que más me preguntan.</h2>
     <div class="faq">
-      <details><summary>¿Es una historia real?</summary><p>Es una novela. La trama es ficción, pero los lugares, las situaciones y la forma de vivir adentro son reales: el autor estuvo ahí, y los capítulos se armaron adentro, con la ayuda de otros internos.</p></details>
-      <details><summary>¿Cómo pago?</summary><p>Desde Argentina, con Mercado Pago: tarjeta de crédito, débito, transferencia o dinero en cuenta. Desde el exterior, con PayPal (solo versión digital). Si preferís otra forma, escribime por WhatsApp.</p></details>
-      <details><summary>¿Qué es la preventa?</summary><p>Reservás el libro antes de que salga, a un precio más bajo. El libro en papel te llega firmado y dedicado, y apenas pagás te mando el capítulo 1 en PDF para que empieces a leer.</p></details>
-      <details><summary>¿Cuándo me llega?</summary><p>Las entregas empiezan el 15 de diciembre. El papel va por correo a todo el país, y el digital te llega por email o WhatsApp.</p></details>
-      <details><summary>¿Lo puedo comprar desde España u otro país?</summary><p>Sí, en versión digital. El libro en papel por ahora se envía solo dentro de Argentina.</p></details>
-      <details><summary>¿Qué diferencia hay entre papel y digital?</summary><p>La historia y las ilustraciones son las mismas. En papel tenés los códigos QR para escanear con el celular. En digital, los mapas y la música son links directos: tocás y se abren.</p></details>
-      <details><summary>¿Cómo funcionan los QR?</summary><p>Los escaneás con la cámara del celular. Algunos abren Google Maps en el lugar de la escena y otros abren la canción que sonaba en ese momento.</p></details>
+      <h3>Preguntas</h3>
+      <div>
+        <details><summary>¿Es una historia real?</summary><p>Es una novela. La trama es ficción, pero los lugares, las situaciones y la forma de vivir adentro son reales: el autor estuvo ahí, y los capítulos se armaron adentro, con la ayuda de otros internos.</p></details>
+        <details><summary>¿Qué es la preventa?</summary><p>Reservás el libro antes de que salga, a un precio más bajo. El libro en papel te llega firmado y dedicado, y apenas pagás te mando el capítulo 1 en PDF para que empieces a leer.</p></details>
+        <details><summary>¿Cuándo me llega?</summary><p>Las entregas empiezan el 15 de diciembre. El papel va por correo a todo el país, y el digital te llega por email o WhatsApp.</p></details>
+        <details><summary>¿Cómo pago?</summary><p>Desde Argentina, con Mercado Pago: tarjeta de crédito, débito, transferencia o dinero en cuenta. Desde el exterior, con PayPal (solo versión digital). Si preferís otra forma, escribime por WhatsApp.</p></details>
+        <details><summary>¿Cómo funcionan los QR?</summary><p>Los escaneás con la cámara del celular. Algunos abren Google Maps en el lugar de la escena y otros abren la canción que sonaba en ese momento.</p></details>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="closing">
-  <div class="wrap">
-    <h2 class="h2">Yo estuve adentro. <em>Ahora entrás vos.</em></h2>
-    <div class="hero-actions">
-      <a class="btn btn-solid btn-lg" href="https://wa.me/5493412609941?text=Hola%21%20Avisame%20cuando%20salga%20Ranchada." target="_blank" rel="noopener" data-venta-href="#comprar" data-venta-text="Reservá en preventa">Avisame cuando salga</a>
-    </div>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <span>Ranchada · Mantenelo vivo</span>
-    <nav class="footer-links" aria-label="Redes y contacto">
-      <a href="https://www.instagram.com/ranchadalibro/" target="_blank" rel="noopener" aria-label="Instagram @ranchadalibro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>@ranchadalibro</a>
-      <a href="https://www.tiktok.com/@ranchadalibro" target="_blank" rel="noopener" aria-label="TikTok @ranchadalibro"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>@ranchadalibro</a>
-      <a href="https://wa.me/5493412609941?text=Hola%21%20Te%20escribo%20por%20el%20libro%20Ranchada." target="_blank" rel="noopener" aria-label="WhatsApp 341 260-9941"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 8.6c0 3.4 2.9 6.4 6.4 6.4l1.1-1.6-2-1-.9.8c-1-.4-1.9-1.3-2.3-2.3l.8-.9-1-2z" fill="currentColor" stroke="none"/></svg>341 260-9941</a>
-    </nav>
-  </div>
+<footer class="foot">
+  <span>Ranchada · Mantenelo vivo · LT</span>
+  <nav class="social" aria-label="Redes y contacto">
+    <a href="https://www.instagram.com/ranchadalibro/" target="_blank" rel="noopener" aria-label="Instagram @ranchadalibro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>@ranchadalibro</a>
+    <a href="https://www.tiktok.com/@ranchadalibro" target="_blank" rel="noopener" aria-label="TikTok @ranchadalibro"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>@ranchadalibro</a>
+    <a href="https://wa.me/5493412609941?text=Hola%21%20Te%20escribo%20por%20el%20libro%20Ranchada." target="_blank" rel="noopener" aria-label="WhatsApp 341 260-9941"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 8.6c0 3.4 2.9 6.4 6.4 6.4l1.1-1.6-2-1-.9.8c-1-.4-1.9-1.3-2.3-2.3l.8-.9-1-2z" fill="currentColor" stroke="none"/></svg>341 260-9941</a>
+  </nav>
 </footer>
 
 <script>
 (function () {
-  var body = document.body;
-  var appear = Array.prototype.slice.call(document.querySelectorAll('.appear'));
-  var photo = document.querySelector('.hero-photo');
-  appear.forEach(function (el) { el.addEventListener('animationend', function (e) { if (e.target === el) el.classList.add('is-in'); }, { once: true }); });
-  if (photo) photo.addEventListener('animationend', function () { photo.classList.add('is-in'); }, { once: true });
-  function forceIn() { appear.forEach(function (el) { el.classList.add('is-in'); }); if (photo) photo.classList.add('is-in'); }
-  requestAnimationFrame(function () { requestAnimationFrame(function () {
-    var first = appear[0];
-    if (!first || typeof first.getAnimations !== 'function') { forceIn(); return; }
-    if (!first.getAnimations().some(function (a) { return a.playState === 'running' || a.playState === 'finished'; })) forceIn();
-  }); });
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Modo de la página: false = 'Avisame cuando salga'; true = venta abierta (botones de pago)
-  var VENTA_ABIERTA = true;
-  if (VENTA_ABIERTA) {
-    document.querySelectorAll('[data-venta-text]').forEach(function (el) {
-      el.textContent = el.getAttribute('data-venta-text');
-    });
-    document.querySelectorAll('[data-venta-href]').forEach(function (el) {
-      var h = el.getAttribute('data-venta-href');
-      el.setAttribute('href', h);
-      if (h.charAt(0) === '#') { el.removeAttribute('target'); el.removeAttribute('rel'); }
-    });
-    document.querySelectorAll('.solo-venta').forEach(function (el) { el.hidden = false; });
-    document.querySelectorAll('.solo-espera').forEach(function (el) { el.hidden = true; });
+  /* Pastilla negra del menú: sigue al link activo o al que tiene el mouse */
+  var nav = document.querySelector('.nav'), pill = nav.querySelector('.nav-pill'), links = nav.querySelectorAll('a');
+  function moveTo(a) {
+    pill.style.width = a.offsetWidth + 'px';
+    pill.style.transform = 'translateX(' + (a.offsetLeft) + 'px)';
+    links.forEach(function (l) { l.classList.toggle('on', l === a); });
   }
-
-  // Selector papel / digital
-  var panels = document.querySelectorAll('.format-panel');
-  function showFormat(value) {
-    panels.forEach(function (p) { p.hidden = p.getAttribute('data-formato') !== value; });
-  }
-  document.querySelectorAll('input[name="formato"]').forEach(function (r) {
-    r.addEventListener('change', function () { if (r.checked) showFormat(r.value); });
+  var active = nav.querySelector('a.on');
+  links.forEach(function (a) {
+    a.addEventListener('mouseenter', function () { moveTo(a); });
+    a.addEventListener('focus', function () { moveTo(a); });
+    a.addEventListener('click', function () { active = a; });
   });
-  var checked = document.querySelector('input[name="formato"]:checked');
-  if (checked) showFormat(checked.value);
+  nav.addEventListener('mouseleave', function () { moveTo(active); });
+  window.addEventListener('resize', function () { moveTo(active); });
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () { moveTo(active); });
+  moveTo(active);
 
-  var burger = document.querySelector('.burger'), nav = document.getElementById('site-nav');
-  function setMenu(open) {
-    body.classList.toggle('menu-open', open);
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  /* Contadores */
+  function fmt(n, el) { return el.getAttribute('data-fmt') === 'miles' ? n.toLocaleString('es-AR') : String(n); }
+  function count(el, ms) {
+    var to = +el.getAttribute('data-count');
+    if (reduce) { el.textContent = fmt(to, el); return; }
+    var t0 = performance.now();
+    (function step(t) {
+      var p = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(Math.round(to * e), el);
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
   }
-  burger.addEventListener('click', function () { setMenu(!body.classList.contains('menu-open')); });
-  nav.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
-  document.querySelector('.menu-backdrop').addEventListener('click', function () { setMenu(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
-  var mq = window.matchMedia('(min-width: 901px)'), onMq = function (m) { if (m.matches) setMenu(false); };
-  if (mq.addEventListener) mq.addEventListener('change', onMq); else mq.addListener(onMq);
+  document.querySelectorAll('.hero [data-count]').forEach(function (el) { setTimeout(function () { count(el, 1400); }, 700); });
+
+  var panel = document.querySelector('[data-panel]');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es, ob) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        panel.classList.add('in');
+        panel.querySelectorAll('[data-count]').forEach(function (el) { count(el, 1400); });
+        ob.disconnect();
+      });
+    }, { threshold: .35 }).observe(panel);
+  } else { panel.classList.add('in'); }
+
+  /* Manifiesto: cada palabra pasa de gris a blanco al bajar */
+  var st = document.querySelector('[data-fill]');
+  var words = st.textContent.trim().split(/\s+/);
+  st.innerHTML = words.map(function (w) { return '<span class="wd">' + w + '</span>'; }).join(' ');
+  var spans = st.querySelectorAll('.wd'), N = spans.length;
+  function grey(k) { // 0 gris, 1 blanco
+    var a = [111,111,111], b = [244,244,244];
+    return 'rgb(' + a.map(function (v, i) { return Math.round(v + (b[i] - v) * k); }).join(',') + ')';
+  }
+  /* Foto: se mueve un poco más lento que la página */
+  var img = document.querySelector('.photo-img');
+  function onScroll() {
+    var r = st.getBoundingClientRect(), vh = window.innerHeight;
+    var p = reduce ? 1 : Math.max(0, Math.min(1, (vh * .85 - r.top) / (r.height + vh * .35)));
+    var head = p * (N + 3);
+    for (var i = 0; i < N; i++) { var k = Math.max(0, Math.min(1, (head - i) / 3)); spans[i].style.color = grey(k); }
+    if (!reduce && window.scrollY < vh * 1.4) img.style.transform = 'translateY(' + (window.scrollY * .12) + 'px)';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
 })();
 </script>
-
+<script>
+/* Achica el título si no entra en el ancho (celulares angostos o fuente distinta) */
+(function () {
+  function fit() {
+    var h = document.querySelector('.title h1'); if (!h) return;
+    h.style.fontSize = '';
+    var t = h.querySelector('.mask > span') || h;
+    var box = h.parentElement.clientWidth, w = t.scrollWidth, n = 0;
+    var size = parseFloat(getComputedStyle(h).fontSize);
+    while (w > box && n++ < 40) { size *= 0.97; h.style.fontSize = size + 'px'; w = t.scrollWidth; }
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  window.addEventListener('load', fit); window.addEventListener('resize', fit);
+})();
+</script>
 </body>
 </html>
